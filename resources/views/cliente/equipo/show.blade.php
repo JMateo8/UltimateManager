@@ -6,23 +6,33 @@
     </x-slot>
     <div class="pt-6">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg flex justify-between">
                 <div class="p-6 bg-white border-b border-gray-200">
-                    EQUIPO {{$equipo->nombre}}
+                    EQUIPO <b>{{$equipo->nombre}}</b>
                 </div>
-                <?php $jornadas = \App\Models\Jornada::all()->pluck('id'); ?>
-                {{$jornadas}}
                 <div class="p-6 bg-white border-b border-gray-200">
-                    <form action="{{route("showJornada", [$equipo])}}" method="post">
+                    JORNADA <b>{{$jornada}}</b>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="pt-6">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg flex justify-center items-center">
+                <div class="p-6 bg-white border-b border-gray-200">
+                <?php $jornadas = \App\Models\Jornada::all()->pluck('id'); ?>
+                    <form action="{{route("showJornada", [$equipo])}}" method="post" class="m-0">
                         @csrf
                         @method("POST")
-                        <select name="jornada">
+                        <select class="border rounded-lg appearance-none focus:shadow-outline" name="jornada">
                             <h1>HOLA</h1>
-                            @foreach($jornadas as $jornada)
-                            <option value="{{$jornada}}">Jornada {{$jornada}}</option>
+                            @foreach($jornadas as $j)
+                                <option value="{{$j}}" @if($j=== $jornada_actual) selected @endif>Jornada {{$j}}</option>
                             @endforeach
                         </select>
-                        <input type="submit" name="submit" value="Refrescar">
+                        <input type="hidden" name="equipo" value="{{$equipo->id}}"/>
+                        <x-button type="submit" name="submit">Refrescar</x-button>
                     </form>
                 </div>
             </div>
@@ -39,15 +49,18 @@
                             <th class="py-3 px-6 text-left">Jugador</th>
                             <th class="py-3 px-6 text-left">Equipo</th>
                             <th class="py-3 px-6 text-left">Posición</th>
-                            <th class="py-3 px-6 text-left">Valoración J{{$jornada}}</th>
+                            <th class="py-3 px-6 text-left">Valoración J<b>{{$jornada}}</b></th>
                             <th class="py-3 px-6 text-center">Valoración media</th>
                             <th class="py-3 px-6 text-center">Precio</th>
+                            @if($jornada == $jornada_actual)
                             <th class="py-3 px-6 text-center">Acciones</th>
+                            @endif
                         </tr>
                         </thead>
                         <tbody class="text-gray-600 text-sm font-light">
+                        <?php $salario = 0 ?>
+                        <?php $val_jornada = 0 ?>
                         @foreach($jugadores as $jugador)
-                        {{$jugador}}
                             <tr class="border-b border-gray-200 hover:bg-gray-100">
                                 <td class="py-3 px-6 text-left whitespace-nowrap">
                                     <div class="flex items-center">
@@ -75,21 +88,61 @@
                                 </td>
                                 <td class="py-3 px-6 whitespace-nowrap">
                                     <div class="flex items-center justify-center">
+                                        <?php ($val_jornada+=$jugador->val_media)?>
                                         {{number_format($jugador->val_media, 1, ",", "")}}
                                     </div>
                                 </td>
                                 <td class="py-3 px-6 whitespace-nowrap">
                                     <div class="flex items-center justify-center">
+                                        <?php ($salario+=$jugador->precio)?>
                                         {{number_format($jugador->precio, 0, "", ".")}} €
                                     </div>
                                 </td>
+                                @if($jornada == $jornada_actual)
                                 <td class="py-3 px-6 whitespace-nowrap">
                                     <div class="flex items-center justify-center">
-                                        Acciones
+                                        <form action="{{route('detach', [$j])}}" method="POST">
+                                            @csrf
+                                            @method("POST")
+                                            <input type="hidden" name="equipo" value="{{$equipo->id}}"/>
+                                            <input type="hidden" name="jugador" value="{{$jugador->id}}"/>
+                                            <input type="hidden" name="jornada" value="{{$jornada}}"/>
+                                            <x-button class="bg-red-600">
+                                                <i class="fas fa-minus-square"></i>
+                                            </x-button>
+                                        </form>
                                     </div>
                                 </td>
+                                @endif
                             </tr>
                         @endforeach
+                        @for($i=$jugadores->count(); $i<10; $i++)
+                            <tr class="border-b border-gray-200 hover:bg-gray-100">
+                                <td class="py-3 px-6 text-center" colspan="6">
+                                    <span>No hay ningún jugador</span>
+                                </td>
+                                <td class="text-center">
+                                    <a href="{{route("equipo.edit", [$equipo])}}">
+                                        <x-button class="bg-green-600">
+                                            <i class="fas fa-plus-square"></i>
+                                        </x-button>
+                                    </a>
+                                </td>
+                            </tr>
+                        @endfor
+                        <tr class="border-b border-gray-200 hover:bg-gray-100">
+                            <td class="py-3 px-6 text-center">
+                                <b>{{count($jugadores)}}/10</b> jugadores alineados
+                            </td>
+                            <td class="py-3 px-6 text-center" colspan="3"></td>
+                            </td>
+                            <td class="py-3 px-6 text-center">
+                                <b>{{number_format($val_jornada, 0, "", ".")}} pts.</b>
+                            </td>
+                            <td class="py-3 px-6 text-center">
+                                <b>{{number_format($salario, 0, "", ".")}} €</b>
+                            <td></td>
+                        </tr>
                         </tbody>
                     </table>
                 </div>

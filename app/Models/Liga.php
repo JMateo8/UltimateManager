@@ -11,6 +11,8 @@ class Liga extends Model
 
     protected $table = "ligas";
 
+    protected $fillable = ["nombre", "admin", "password"];
+
     public function admin(){
         return $this->hasOne(User::class, "admin", "id");
     }

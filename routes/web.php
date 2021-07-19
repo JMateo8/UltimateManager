@@ -29,14 +29,34 @@ Route::get('/dashboard', function () {
 Route::resource("user", \App\Http\Controllers\User::class)
     ->middleware("auth")->middleware("admin");
 
+Route::group(["prefix" => "liga", "middleware" => ["auth"]], function (){
+    Route::post("/inscribir", [\App\Http\Controllers\LigaController::class, 'inscribir'])
+        ->name("inscribir");
+
+    Route::post("/desapuntar", [\App\Http\Controllers\LigaController::class, 'desapuntar'])
+        ->name("desapuntar");
+
+    Route::post("/passvista", [\App\Http\Controllers\LigaController::class, 'passVista'])
+        ->name("passvista");
+});
+
+Route::resource("liga", \App\Http\Controllers\LigaController::class)
+    ->middleware("auth");
+
+Route::group(["prefix" => "equipo", "middleware" => ["auth"]], function (){
+    Route::post('/showJornada', [\App\Http\Controllers\EquipoController::class, 'showJornada'])
+        ->name("showJornada");
+    Route::post("/detach", [\App\Http\Controllers\EquipoController::class, 'detach'])
+        ->name("detach");
+    Route::post("/attach", [\App\Http\Controllers\EquipoController::class, 'attach'])
+        ->name("attach");
+});
+
+Route::resource("equipo", \App\Http\Controllers\EquipoController::class)->middleware("auth");
+
 Route::get('/mercado', function (){
     $jugadores = \App\Models\Jugador::orderByRaw("FIELD(posicion, 'Base', 'Escolta', 'Alero', 'Ala-Pivot', 'Pivot')")->get();
     return view('mercado', ["jugadores" => $jugadores]);
-});
-
-Route::post('equipo/showJornada', [\App\Http\Controllers\EquipoController::class, 'showJornada'])->middleware("auth")
-    ->name("showJornada");
-
-Route::resource("equipo", \App\Http\Controllers\EquipoController::class)->middleware("auth");
+})->name("mercado");
 
 require __DIR__.'/auth.php';

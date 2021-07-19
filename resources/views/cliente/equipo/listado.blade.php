@@ -9,7 +9,7 @@
         <div class="pt-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                    <div class="p-6 text-center flex justify-between bg-white border-b border-gray-200">
+                    <div class="p-6 text-center flex justify-between items-center bg-white border-b border-gray-200">
                         <div>
                             <b>Listado de equipos</b>
                         </div>
@@ -34,6 +34,7 @@
                         <tr class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
                             <th class="py-3 px-6 text-left">Equipo</th>
                             <th class="py-3 px-6 text-left hidden sm:table-cell md:table-cell lg:table-cell">Puntuación</th>
+                            <th class="py-3 px-6 text-left hidden sm:table-cell md:table-cell lg:table-cell">Ligas</th>
 {{--                            <th class="py-3 px-6 text-left hidden sm:table-cell md:table-cell lg:table-cell">Jugadores</th>--}}
                             <th class="py-3 px-6 text-center">Acciones</th>
                         </tr>
@@ -49,6 +50,16 @@
                                 <td class="py-3 px-6 text-left whitespace-nowrap">
                                     <div class="flex">
                                         {{number_format($equipo->puntuacion, 1, ",", "")}} pts.
+                                    </div>
+                                </td>
+                                <td class="py-3 px-6 text-left whitespace-nowrap">
+                                    <div class="flex">
+                                        <?php
+                                            $ids = $equipo->ligas;
+                                            ?>
+                                        @foreach($equipo->ligas as $liga)
+                                        {{$liga->nombre}}<br/>
+                                        @endforeach
                                     </div>
                                 </td>
                                 <td class="py-3 px-6 text-center">
