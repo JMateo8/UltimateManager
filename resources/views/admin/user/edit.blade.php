@@ -9,8 +9,17 @@
         <div class="pt-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                    <div class="p-6 text-center bg-white border-b border-gray-200">
-                        Editar usuario <b>{{$user->name}}</b> ({{$user->email}})
+                    <div class="p-6 text-center flex justify-between items-center bg-white border-b border-gray-200">
+                        <div>
+                            <a href="{{route("user.index")}}">
+                                <x-button>
+                                    {{ __('Volver') }}
+                                </x-button>
+                            </a>
+                        </div>
+                        <div>
+                            Editar usuario <b>{{$user->name}}</b>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -62,11 +71,6 @@
                                 {{ __('Actualizar') }}
                             </x-button>
                         </form>
-                        <a href="{{route("user.index")}}">
-                            <x-button class="mt-4">
-                                {{ __('Volver') }}
-                            </x-button>
-                        </a>
                     </div>
                 </div>
             </div>

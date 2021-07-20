@@ -22,12 +22,12 @@
                     </x-nav-link>
                 </div>
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+                    <x-nav-link :href="route('jugador.index')" :active="request()->routeIs('dashboard')">
                         {{ __('Modificar mercado') }}
                     </x-nav-link>
                 </div>
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+                    <x-nav-link :href="route('liga.index')" :active="request()->routeIs('dashboard')">
                         {{ __('Listar ligas') }}
                     </x-nav-link>
                 </div>
@@ -84,13 +84,13 @@
             <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                 {{ __('Inicio') }}
             </x-responsive-nav-link>
-            <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+            <x-responsive-nav-link :href="route('user.index')" :active="request()->routeIs('dashboard')">
                 {{ __('Listar usuarios') }}
             </x-responsive-nav-link>
-            <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+            <x-responsive-nav-link :href="route('jugador.index')" :active="request()->routeIs('dashboard')">
                 {{ __('Modificar mercado') }}
             </x-responsive-nav-link>
-            <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+            <x-responsive-nav-link :href="route('liga.index')" :active="request()->routeIs('dashboard')">
                 {{ __('Listar ligas') }}
             </x-responsive-nav-link>
         </div>

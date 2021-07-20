@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Dashboard') }}
+            {{ __('Ultimate Manager') }}
         </h2>
     </x-slot>
 
@@ -15,7 +15,7 @@
                         </div>
                         <div>
                             <a href="{{route("equipo.create")}}">
-                                <x-button>
+                                <x-button class="bg-green-600">
                                     {{ __('Nuevo equipo') }}
                                 </x-button>
                             </a>
@@ -29,13 +29,14 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 bg-white border-b border-gray-200">
+                    @if($equipos->count())
                     <table class="min-w-max w-full table-auto">
                         <thead>
                         <tr class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
                             <th class="py-3 px-6 text-left">Equipo</th>
                             <th class="py-3 px-6 text-left hidden sm:table-cell md:table-cell lg:table-cell">Puntuación</th>
+                            <th class="py-3 px-6 text-left hidden sm:table-cell md:table-cell lg:table-cell">Jugadores</th>
                             <th class="py-3 px-6 text-left hidden sm:table-cell md:table-cell lg:table-cell">Ligas</th>
-{{--                            <th class="py-3 px-6 text-left hidden sm:table-cell md:table-cell lg:table-cell">Jugadores</th>--}}
                             <th class="py-3 px-6 text-center">Acciones</th>
                         </tr>
                         </thead>
@@ -47,26 +48,31 @@
                                         <span class="font-medium">{{$equipo->nombre}}</span>
                                     </div>
                                 </td>
-                                <td class="py-3 px-6 text-left whitespace-nowrap">
+                                <td class="py-3 px-6 text-left whitespace-nowrap hidden sm:table-cell md:table-cell lg:table-cell">
                                     <div class="flex">
                                         {{number_format($equipo->puntuacion, 1, ",", "")}} pts.
                                     </div>
                                 </td>
-                                <td class="py-3 px-6 text-left whitespace-nowrap">
+                                <td class="py-3 px-6 text-left whitespace-nowrap hidden sm:table-cell md:table-cell lg:table-cell">
                                     <div class="flex">
-                                        <?php
-                                            $ids = $equipo->ligas;
-                                            ?>
+                                        {{$equipo->jugadores->where("pivot.jornada_id", $jornada_actual)->count()}}/10
+                                    </div>
+                                </td>
+                                <td class="py-3 px-6 text-left whitespace-nowrap hidden sm:table-cell md:table-cell lg:table-cell">
+                                    <div class="flex">
+                                        @if(count($equipo->ligas))
                                         @foreach($equipo->ligas as $liga)
-                                        {{$liga->nombre}}<br/>
+                                            {{$liga->nombre}}<br/>
                                         @endforeach
+                                        @else
+                                            0 ligas
+                                        @endif
                                     </div>
                                 </td>
                                 <td class="py-3 px-6 text-center">
                                     <div class="flex item-center justify-center">
                                         <div class="w-4 mr-2 transform text-yellow-500 hover:text-yellow-500 hover:scale-110">
                                             <a href="{{route("equipo.show", [$equipo] )}}" title="Ver">
-                                                <!--<i class="far fa-eye"></i>-->
                                                 <i class="far fa-edit"></i>
                                             </a>
                                         </div>
@@ -85,6 +91,11 @@
                         @endforeach
                         </tbody>
                     </table>
+                    @else
+                        <div class="flex items-center justify-center">
+                            <b class="text-center">¡Crea tu primer equipo YA!</b>
+                        </div>
+                    @endif
                 </div>
             </div>
         </div>

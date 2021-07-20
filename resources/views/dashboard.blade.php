@@ -136,13 +136,13 @@
                                 <tbody class="text-gray-600 text-sm font-light">
                                 @if(count($ligas)===0)
                                     <tr class="border-b border-gray-200 hover:bg-gray-100">
-                                        <td class="py-3 px-6 text-left whitespace-nowrap" colspan="4">
-                                            <div class="flex justify-between">
+                                        <td class="py-3 px-6 text-left whitespace-nowrap" colspan="3">
+                                            <div class="flex items-center justify-between">
                                                 <div><i>No perteneces a ninguna liga todavía</i></div>
                                                 <div>
-                                                    <a href="{{route("liga.create")}}">
+                                                    <a href="{{route("liga.index")}}">
                                                         <x-button>
-                                                            Crear
+                                                            Ligas
                                                         </x-button>
                                                     </a>
                                                 </div>
@@ -169,6 +169,7 @@
                                                             <i class="far fa-eye"></i>
                                                         </a>
                                                     </div>
+                                                    @if(\Illuminate\Support\Facades\Auth::id() === $liga->admin)
                                                     <form action="{{route('liga.destroy', [$liga])}}" method="post">
                                                         @method("delete")
                                                         @csrf
@@ -178,6 +179,7 @@
                                                             </button>
                                                         </div>
                                                     </form>
+                                                    @endif
                                                 </div>
                                             </td>
                                         </tr>

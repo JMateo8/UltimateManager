@@ -54,8 +54,11 @@ Route::group(["prefix" => "equipo", "middleware" => ["auth"]], function (){
 
 Route::resource("equipo", \App\Http\Controllers\EquipoController::class)->middleware("auth");
 
+Route::resource("jugador", \App\Http\Controllers\JugadorController::class)
+    ->middleware(["auth", "admin"]);
+
 Route::get('/mercado', function (){
-    $jugadores = \App\Models\Jugador::orderByRaw("FIELD(posicion, 'Base', 'Escolta', 'Alero', 'Ala-Pivot', 'Pivot')")->get();
+    $jugadores = \App\Models\Jugador::with("equipo_euro")->get();
     return view('mercado', ["jugadores" => $jugadores]);
 })->name("mercado");
 

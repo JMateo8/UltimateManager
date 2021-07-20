@@ -20,7 +20,8 @@ class EquipoController extends Controller
     public function index()
     {
         $equipos = User::find(Auth::id())->equipos;
-        return view("cliente.equipo.listado", ["equipos" => $equipos]);
+        $jornada_actual = Jornada::where("actual", 1)->pluck("id");
+        return view("cliente.equipo.listado", ["equipos" => $equipos, "jornada_actual" => $jornada_actual[0]]);
     }
 
     /**
@@ -43,7 +44,8 @@ class EquipoController extends Controller
     {
         $equipo = new Equipo($request->input());
         $equipo->save();
-        return redirect()->route("equipo.index")->with('status', "¡Equipo $equipo->nombre creado!");
+        //return redirect()->route("equipo.index")->with('status', "¡Equipo $equipo->nombre creado!");
+        return redirect()->route("equipo.show", [$equipo])->with('status', "¡Equipo $equipo->nombre creado!");
     }
 
     /**

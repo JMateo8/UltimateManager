@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Ultimate Manager') }}
+            {{ __('Panel de administración') }}
         </h2>
     </x-slot>
 
@@ -9,13 +9,21 @@
         <div class="pt-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                    <div class="p-6 text-center bg-white border-b border-gray-200">
-                        <div class="text-center">
-                            <b>Mercado de jugadores</b>
+                    <div class="p-6 text-center flex justify-between items-center bg-white border-b border-gray-200">
+                        <div>
+                            <b>Administración del mercado</b>
+                        </div>
+                        <div>
+                            <a href="{{route("jugador.create")}}">
+                                <x-button class="bg-green-600">
+                                    {{ __('Añadir') }}
+                                </x-button>
+                            </a>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
 
             <div class="pt-6">
                 <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
@@ -32,9 +40,7 @@
                                     <th class="py-3 px-6 text-center">País</th>
                                     <th class="py-3 px-6 text-center">Altura</th>
                                     <th class="py-3 px-6 text-center">Edad</th>
-                                    @if(\Illuminate\Support\Facades\Auth::user()->admin === 1)
-                                        <th class="py-3 px-6 text-center">Acciones</th>
-                                    @endif
+                                    <th class="py-3 px-6 text-center">Acciones</th>
                                 </tr>
                                 </thead>
                                 <tbody class="text-gray-600 text-sm font-light">
@@ -76,26 +82,24 @@
                                                 {{$jugador->edad}}
                                             </div>
                                         </td>
-                                        @if(\Illuminate\Support\Facades\Auth::user()->admin === 1)
-                                            <td class="py-3 px-6 text-center">
-                                                <div class="flex item-center justify-center">
-                                                    <div class="w-4 mr-2 transform text-yellow-500 hover:text-yellow-500 hover:scale-110">
-                                                        <a href="{{route("jugador.edit", [$jugador] )}}" title="Editar">
-                                                            <i class="far fa-edit"></i>
-                                                        </a>
-                                                    </div>
-                                                    <form action="{{route('jugador.destroy', [$jugador])}}" method="post">
-                                                        @method("delete")
-                                                        @csrf
-                                                        <div class="w-4 mr-2 transform text-red-500 hover:text-red-500 hover:scale-110">
-                                                            <button type="submit" title="Eliminar">
-                                                                <i class="far fa-trash-alt"></i>
-                                                            </button>
-                                                        </div>
-                                                    </form>
+                                        <td class="py-3 px-6 text-center">
+                                            <div class="flex item-center justify-center">
+                                                <div class="w-4 mr-2 transform text-yellow-500 hover:text-yellow-500 hover:scale-110">
+                                                    <a href="{{route("jugador.edit", [$jugador] )}}" title="Editar">
+                                                        <i class="far fa-edit"></i>
+                                                    </a>
                                                 </div>
-                                            </td>
-                                        @endif
+                                                <form action="{{route('jugador.destroy', [$jugador])}}" method="post">
+                                                    @method("delete")
+                                                    @csrf
+                                                    <div class="w-4 mr-2 transform text-red-500 hover:text-red-500 hover:scale-110">
+                                                        <button type="submit" title="Eliminar">
+                                                            <i class="far fa-trash-alt"></i>
+                                                        </button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </td>
                                     </tr>
                                 @endforeach
                                 </tbody>

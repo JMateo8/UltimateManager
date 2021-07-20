@@ -226,7 +226,8 @@
                                                                 <i class="far fa-eye"></i>
                                                             </a>
                                                         </div>
-                                                        @if(!in_array($liga->id, $ligasActivas->pluck("id")->toArray())) <div class="w-4 mr-2 transform text-yellow-500 hover:text-yellow-500 hover:scale-110">
+                                                        @if(!in_array($liga->id, $ligasActivas->pluck("id")->toArray()))
+                                                        <div class="w-4 mr-2 transform text-yellow-500 hover:text-yellow-500 hover:scale-110">
                                                             <a href="{{route('liga.edit', [$liga])}}" title="Inscribir">
                                                                 <i class="far fa-edit"></i>
                                                             </a>

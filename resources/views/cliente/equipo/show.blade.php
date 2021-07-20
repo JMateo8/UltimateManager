@@ -6,11 +6,18 @@
     </x-slot>
     <div class="pt-6">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg flex justify-between">
-                <div class="p-6 bg-white border-b border-gray-200">
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg flex items-center justify-between">
+                <div class="p-6 bg-white">
+                    <a href="{{route("equipo.index")}}">
+                        <x-button>
+                            Volver
+                        </x-button>
+                    </a>
+                </div>
+                <div class="p-6 bg-white">
                     EQUIPO <b>{{$equipo->nombre}}</b>
                 </div>
-                <div class="p-6 bg-white border-b border-gray-200">
+                <div class="p-6 bg-white">
                     JORNADA <b>{{$jornada}}</b>
                 </div>
             </div>
@@ -121,6 +128,7 @@
                                 <td class="py-3 px-6 text-center" colspan="6">
                                     <span>No hay ningún jugador</span>
                                 </td>
+                                @if($jornada == $jornada_actual)
                                 <td class="text-center">
                                     <a href="{{route("equipo.edit", [$equipo])}}">
                                         <x-button class="bg-green-600">
@@ -128,6 +136,7 @@
                                         </x-button>
                                     </a>
                                 </td>
+                                @endif
                             </tr>
                         @endfor
                         <tr class="border-b border-gray-200 hover:bg-gray-100">

@@ -14,7 +14,8 @@ class JugadorController extends Controller
      */
     public function index()
     {
-        //
+        $jugadores = \App\Models\Jugador::with("equipo_euro")->get();
+        return view("admin.jugador.listado", ["jugadores" => $jugadores]);
     }
 
     /**
@@ -24,7 +25,7 @@ class JugadorController extends Controller
      */
     public function create()
     {
-        //
+        return view("admin.jugador.create");
     }
 
     /**
@@ -35,7 +36,14 @@ class JugadorController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->merge([
+            'nombre' => $request->apellido . ", " . $request->nombre
+        ]);
+        $request->request->remove('apellido');
+        $jugador = new Jugador($request->input());
+        $jugador->save();
+        return redirect()->route("jugador.index")->with('status', "¡Jugador $jugador->nombre creado!");
+
     }
 
     /**
@@ -57,7 +65,8 @@ class JugadorController extends Controller
      */
     public function edit(Jugador $jugador)
     {
-        //
+        list($apellido, $nombre) = explode(", ", $jugador->nombre);
+        return view("admin.jugador.edit", ["jugador" =>$jugador, "apellido" => $apellido, "nombre" => $nombre]);
     }
 
     /**
@@ -69,7 +78,12 @@ class JugadorController extends Controller
      */
     public function update(Request $request, Jugador $jugador)
     {
-        //
+        $request->merge([
+            'nombre' => $request->apellido . ", " . $request->nombre
+        ]);
+        $request->request->remove('apellido');
+        $jugador->fill($request->input())->saveOrFail();
+        return redirect()->route("jugador.index")->with('status', "¡Jugador $jugador->nombre actualizado!");
     }
 
     /**
@@ -80,6 +94,7 @@ class JugadorController extends Controller
      */
     public function destroy(Jugador $jugador)
     {
-        //
+        $jugador->delete();
+        return redirect()->route("jugador.index")->with('status', "¡Jugador $jugador->nombre eliminado!");
     }
 }

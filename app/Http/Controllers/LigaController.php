@@ -37,14 +37,6 @@ class LigaController extends Controller
                 "equipos" => $equipos]);
     }
 
-    public function data(){
-        $ligas = Liga::join('equipo_liga', 'ligas.id', '=', 'equipo_liga.liga_id')
-            ->join('equipos', 'equipo_liga.equipo_id', '=', 'equipos.id')
-            ->where('equipos.id_user', Auth::user()->id)
-            ->get(['ligas.id', 'ligas.nom_liga', 'equipos.nom_eq_fnt', 'ligas.admin']);
-        return $ligas;
-    }
-
     /**
      * Show the form for creating a new resource.
      *
@@ -80,9 +72,13 @@ class LigaController extends Controller
      */
     public function show(Liga $liga)
     {
+        $userId = Auth::id();
         $equipos = $liga->equipos->sortByDesc("puntuacion");
+        $ligasActivas = Liga::whereHas('equipos', function($q) use($userId) {
+            $q->where('user_id', $userId);
+        })->pluck("id")->toArray();
 
-        return view("cliente.liga.show", ["liga" => $liga, "equipos" => $equipos]);
+        return view("cliente.liga.show", ["liga" => $liga, "equipos" => $equipos, "ligasActivas" => $ligasActivas]);
     }
 
     /**
