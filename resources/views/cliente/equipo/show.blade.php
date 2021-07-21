@@ -105,7 +105,7 @@
                                         {{number_format($jugador->precio, 0, "", ".")}} €
                                     </div>
                                 </td>
-                                @if($jornada == $jornada_actual && !\App\Models\Jornada::find($jornada)->cerrada)
+                                @if(!\App\Models\Jornada::find($jornada)->cerrada)
                                 <td class="py-3 px-6 whitespace-nowrap">
                                     <div class="flex items-center justify-center">
                                         <form action="{{route('detach', [$j])}}" method="POST">
@@ -120,7 +120,7 @@
                                         </form>
                                     </div>
                                 </td>
-                                @else
+                                @elseif($jornada == $jornada_actual)
                                     <td class="py-3 px-6 whitespace-nowrap">
                                         <div class="flex items-center justify-center">
                                             <x-button class="bg-gray-600 cursor-not-allowed">

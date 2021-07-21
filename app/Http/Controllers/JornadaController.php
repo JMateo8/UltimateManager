@@ -41,7 +41,6 @@ class JornadaController extends Controller
         $newJornada->actual = 1;
         $newJornada->save();
 
-        $arrayJugadores = [];
         foreach (Equipo::all() as $equipo) {
             foreach ($equipo->jugadores->where("pivot.jornada_id", $jornadaId) as $jugador) {
                 DB::table("equipo_jornada_jugador")->insert([
@@ -50,7 +49,6 @@ class JornadaController extends Controller
                     "jornada_id" => $newJornadaId
                 ]);
             }
-            //$arrayJugadores[] = $equipo->jugadores->where("pivot.jornada_id",$jornadaId)->toArray();
         }
 
         return back();
