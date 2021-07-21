@@ -12,6 +12,10 @@ class EquipoEuro extends Model
 
     protected $fillable = ["id", "nombre", "pais"];
 
+    protected $primaryKey = "id";
+
+    protected $keyType = "string";
+
     use HasFactory;
 
     public function jugadores(){
