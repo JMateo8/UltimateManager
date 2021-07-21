@@ -62,4 +62,10 @@ Route::get('/mercado', function (){
     return view('mercado', ["jugadores" => $jugadores]);
 })->name("mercado");
 
+Route::post("/cerrarJornada", [\App\Http\Controllers\JornadaController::class, 'cerrarJornada'])
+    ->name("cerrarJornada");
+
+Route::post("/siguienteJornada", [\App\Http\Controllers\JornadaController::class, 'siguienteJornada'])
+    ->name("siguienteJornada");
+
 require __DIR__.'/auth.php';

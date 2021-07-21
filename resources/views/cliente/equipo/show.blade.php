@@ -105,7 +105,7 @@
                                         {{number_format($jugador->precio, 0, "", ".")}} €
                                     </div>
                                 </td>
-                                @if($jornada == $jornada_actual)
+                                @if($jornada == $jornada_actual && !\App\Models\Jornada::find($jornada)->cerrada)
                                 <td class="py-3 px-6 whitespace-nowrap">
                                     <div class="flex items-center justify-center">
                                         <form action="{{route('detach', [$j])}}" method="POST">
@@ -120,6 +120,14 @@
                                         </form>
                                     </div>
                                 </td>
+                                @else
+                                    <td class="py-3 px-6 whitespace-nowrap">
+                                        <div class="flex items-center justify-center">
+                                            <x-button class="bg-gray-600 cursor-not-allowed">
+                                                <i class="fas fa-lock"></i>
+                                            </x-button>
+                                        </div>
+                                    </td>
                                 @endif
                             </tr>
                         @endforeach
@@ -128,7 +136,7 @@
                                 <td class="py-3 px-6 text-center" colspan="6">
                                     <span>No hay ningún jugador</span>
                                 </td>
-                                @if($jornada == $jornada_actual)
+                                @if($jornada == $jornada_actual && !\App\Models\Jornada::find($jornada)->cerrada)
                                 <td class="text-center">
                                     <a href="{{route("equipo.edit", [$equipo])}}">
                                         <x-button class="bg-green-600">

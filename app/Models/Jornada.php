@@ -13,6 +13,8 @@ class Jornada extends Model
 
     protected $table = "jornada";
 
+    public $timestamps = false;
+
     public function equipos(){
         return $this->belongsToMany(Equipo::class, "equipo_jornada", "jornada_id", "equipo_id")
             ->withPivot("puntuacion");

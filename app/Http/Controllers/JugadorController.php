@@ -15,6 +15,7 @@ class JugadorController extends Controller
     public function index()
     {
         $jugadores = \App\Models\Jugador::with("equipo_euro")->get();
+        //info($jugadores);
         return view("admin.jugador.listado", ["jugadores" => $jugadores]);
     }
 
