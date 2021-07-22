@@ -30,22 +30,21 @@
                         <form action="{{route('liga.update', [$liga])}}" method="POST">
                             @method("PUT")
                             @csrf
-                            <div class="mt-4">
-                                <x-label for="nombre" :value="__('Nombre')" />
-                                <x-input id="nombre" class="mt-1 w-1/2"
-                                         type="text"
-                                         name="nombre"
-                                         value="{{$liga->nombre}}"
-                                         readonly/>
+                            <div class="flex flex-wrap -mx-3 mb-6">
+                                <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+                                    <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="nombre">
+                                        Nombre de la liga
+                                    </label>
+                                    <input readonly name="nombre" id="nombre" type="text" value="{{$liga->nombre}}" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white">
+                                </div>
+                                <div class="w-full md:w-1/2 px-3">
+                                    <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="password">
+                                        Contraseña
+                                    </label>
+                                    <input name="password" id="password" type="password" required class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
+                                </div>
                             </div>
-                            <div class="mt-4">
-                                <x-label for="password" :value="__('Contraseña')" />
-                                <x-input id="password" class="mt-1 w-1/2"
-                                         type="password"
-                                         name="password"
-                                         required />
-                            </div>
-                            <x-button class="mt-4 bg-green-600" type="submit">
+                            <x-button type="submit" class="bg-green-600">
                                 {{ __('Actualizar') }}
                             </x-button>
                         </form>

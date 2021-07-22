@@ -55,7 +55,7 @@ class JugadorController extends Controller
      */
     public function show(Jugador $jugador)
     {
-        //
+        //return view("admin.jugador.show", ["jugador" => $jugador]);
     }
 
     /**

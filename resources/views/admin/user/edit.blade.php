@@ -32,42 +32,40 @@
                         <form action="{{route('user.update',[$user])}}" method="POST">
                             @csrf
                             @method("PUT")
-                            <div class="mt-4">
-                                <x-label for="name" :value="__('Nombre')" />
-                                <x-input id="name" class="mt-1 w-1/2"
-                                         type="text"
-                                         name="name"
-                                         value="{{$user->name}}"
-                                         placeholder="{{$user->name}}"
-                                         required />
+                            <div class="flex flex-wrap -mx-3 mb-6">
+                                <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+                                    <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="name">
+                                        Nombre
+                                    </label>
+                                    <input name="name" id="name" type="text" required value="{{$user->name}}" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white">
+                                </div>
+                                <div class="w-full md:w-1/2 px-3">
+                                    <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="email">
+                                        Correo electrónico
+                                    </label>
+                                    <input name="email" id="email" type="text" required value="{{$user->email}}" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
+                                </div>
                             </div>
-                            <div class="mt-4">
-                                <x-label for="email" :value="__('Correo electrónico')" />
-                                <x-input id="email" class="mt-1 w-1/2"
-                                         type="text"
-                                         name="email"
-                                         value="{{$user->email}}"
-                                         placeholder="{{$user->email}}"
-                                         required />
+                            <div class="flex flex-wrap -mx-3 mb-6">
+                                <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+                                    <label for="admin" class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-state">
+                                        Rol
+                                    </label>
+                                    <div class="relative">
+                                        <select id="admin" required name="admin" class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
+                                            <option value="0" @if($user->admin === 0) selected @endif>Usuario</option>
+                                            <option value="1" @if($user->admin === 1) selected @endif>Administrador</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="w-full md:w-1/2 px-3">
+                                    <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="password">
+                                        Contraseña
+                                    </label>
+                                    <input required name="password" id="password" type="password" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
+                                </div>
                             </div>
-                            <div class="mt-4">
-                                <x-label for="password" :value="__('Contraseña')" />
-                                <x-input id="password" class="mt-1 w-1/2"
-                                         type="password"
-                                         name="password"
-                                         value=""
-                                         placeholder=""
-                                         required />
-                            </div>
-                            <div class="mt-4">
-                                <x-label for="admin" :value="__('Rol')" />
-                                <select name="admin" class="w-1/2 rounded-md shadow-sm border-gray-300 focus:border-green-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
-                                    <option value="0" @if($user->admin === 0) selected @endif>Usuario</option>
-                                    <option value="1" @if($user->admin === 1) selected @endif>Administrador</option>
-                                </select>
-
-                            </div>
-                            <x-button class="mt-4" type="submit">
+                            <x-button type="submit" class="bg-green-600">
                                 {{ __('Actualizar') }}
                             </x-button>
                         </form>

@@ -29,12 +29,12 @@
                                     <li><b>Nombre</b>: {{$jugador->nombre}}</li>
                                     <li><b>Equipo</b>: {{$jugador->equipo}}</li>
                                     <li><b>Posición</b>: {{$jugador->posicion}}</li>
-                                    <li><b>Nacionalidad</b>: España </li>
-                                    <li><b>Edad</b>: 34 años</li>
-                                    <li><b>Dorsal</b>: #13</li>
-                                    <li><b>Height</b>: 1.91m</li>
+                                    <li><b>Nacionalidad</b>: {{$jugador->pais}} </li>
+                                    <li><b>Edad</b>: {{$jugador->edad}}</li>
+{{--                                    <li><b>Dorsal</b>: #13</li>--}}
+                                    <li><b>Altura</b>: {{number_format($jugador->altura/100, 2, "'", ".")}} m.</li>
                                     <li><b>Valoración media</b>: {{number_format($jugador->val_media, 1, ",", "")}}</li>
-                                    <li><b>Valoración precio</b>: {{number_format($jugador->precio, 0, "", ".")}} €</li>
+                                    <li><b>Precio</b>: {{number_format($jugador->precio, 0, "", ".")}} €</li>
                                 </ul>
                             </div>
                         </div>

@@ -56,15 +56,19 @@ class EquipoController extends Controller
      */
     public function show(Equipo $equipo)
     {
-        $jornada_actual = Jornada::where("actual", 1)->pluck("id");
-        $jugadores = $equipo->jugadores->where("pivot.jornada_id", $jornada_actual[0])->sortBy("nombre");
-//        $jugadores = [];
-//        foreach ($jugadoresPivot as $jugador){
-//            if ($jugador->pivot["jornada_id"] === $jornada_actual[0]){
-//                $jugadores[] = $jugador;
-//            }
-//        }
-        return view("cliente.equipo.show", ["equipo" => $equipo, "jugadores" => $jugadores, "jornada" => $jornada_actual[0], "jornada_actual" => $jornada_actual[0]]);
+        if ($equipo->user_id === \auth()->id()){
+            $jornada_actual = Jornada::where("actual", 1)->pluck("id");
+            $jugadores = $equipo->jugadores->where("pivot.jornada_id", $jornada_actual[0])->sortBy("nombre");
+    //        $jugadores = [];
+    //        foreach ($jugadoresPivot as $jugador){
+    //            if ($jugador->pivot["jornada_id"] === $jornada_actual[0]){
+    //                $jugadores[] = $jugador;
+    //            }
+    //        }
+            return view("cliente.equipo.show", ["equipo" => $equipo, "jugadores" => $jugadores, "jornada" => $jornada_actual[0], "jornada_actual" => $jornada_actual[0]]);
+        } else {
+            return back()->withErrors(["error" => "Este equipo no es tuyo"]);
+        }
     }
 
     /**
