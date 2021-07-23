@@ -141,11 +141,11 @@
 </head>
 <body class="font-sans antialiased">
 <div class="min-h-screen bg-gray-100">
-@if(\Illuminate\Support\Facades\Auth::user()->admin)
-    @include('admin.navigation')
-@else
-    @include('layouts.navigation')
-@endif
+    @if(auth()->user()->admin)
+        @include('admin.navigation')
+    @else
+        @include('layouts.navigation')
+    @endif
 
 <!-- Page Heading -->
     <header class="bg-white shadow">

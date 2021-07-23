@@ -1,5 +1,12 @@
 <?php
     $jornada_actual = \App\Models\Jornada::where("actual", 1)->pluck("id");
+    $equipos = \App\Models\Equipo::where("user_id", auth()->id())
+        ->withCount([
+            'jugadores' => function ($query) use($jornada_actual) {
+                $query->where('jornada_id', $jornada_actual[0]);
+            }])
+        ->take(4)
+        ->get();
 ?>
 <x-app-layout>
     <x-slot name="header">
@@ -7,14 +14,11 @@
         <div class="flex justify-between">
             <div>
                 <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                    {{ __('Dashboard') }}
+                    {{ __('Ultimate Manager') }}
                 </h2>
             </div>
             <div>
                 Jornada actual: {{$jornada_actual[0]}}
-            </div>
-            <div>
-                Fecha actual: {{date(now())}}
             </div>
         </div>
 
@@ -28,8 +32,7 @@
                         <!--Tablas-->
                         <div class="box col-span-3 sm:col-span-2 md:col-span-2 lg:col-span-2">
                             <?php
-                                $user = \App\Models\User::find(\Illuminate\Support\Facades\Auth::id());
-                                $equipos = $user->equipos->take(4);
+                                //$equipos = auth()->user()->equipos->take(4);
                             ?>
                             <h3 class="text-center border-b-2 mb-3">Equipos</h3>
                             <table class="min-w-max w-full table-auto">
@@ -37,7 +40,7 @@
                                 <tr class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
                                     <th class="py-3 px-6 text-left">Equipo</th>
                                     <th class="py-3 px-6 text-left hidden sm:hidden md:table-cell lg:table-cell">Puntos</th>
-                                    <th class="py-3 px-6 text-center hidden sm:hidden md:table-cell lg:table-cell">Jugadores</th>
+                                    <th class="py-3 px-6 text-center hidden sm:hidden md:hidden lg:table-cell">Jugadores</th>
                                     <th class="py-3 px-6 text-center">Acciones</th>
                                 </tr>
                                 </thead>
@@ -70,10 +73,10 @@
                                                     <span class="text-center">{{number_format($e->puntuacion, 1, ",", "")}} pts.</span>
                                                 </div>
                                             </td>
-                                            <td class="py-3 px-6 text-center hidden sm:hidden md:table-cell lg:table-cell">
+                                            <td class="py-3 px-6 text-center hidden sm:hidden md:hidden lg:table-cell">
                                                 <div class="flex items-center justify-center">
                                                     <span class="text-center">
-                                                        {{$e->jugadores->where("pivot.jornada_id", $jornada_actual[0])->count()}}/10
+                                                        {{$e->jugadores_count}}/10
                                                     </span>
                                                 </div>
                                             </td>
@@ -120,9 +123,11 @@
                         <div class="box row-start-2 sm:col-start-2 col-span-3 sm:col-span-2 md:col-span-2 lg:col-span-2">
                             <!--Ligas-->
                             <?php
-                            $ligas = \App\Models\Liga::whereHas('equipos', function($q) {
-                                $q->where('user_id', \Illuminate\Support\Facades\Auth::id());
-                            })->take(4)->get();
+                            $ligas = \App\Models\Liga::with(["user"])
+                                ->whereHas('equipos', function($q) {
+                                    $q->where('user_id', \auth()->id());
+                                })
+                                ->withCount("equipos")->take(4)->get();
                             ?>
                             <h3 class="text-center border-b-2 mb-3">Ligas</h3>
                             <table class="min-w-max w-full table-auto">
@@ -130,6 +135,7 @@
                                 <tr class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
                                     <th class="py-3 px-6 text-left">Nombre</th>
                                     <th class="py-3 px-6 text-center hidden sm:hidden md:table-cell lg:table-cell">Admin</th>
+                                    <th class="py-3 px-6 text-center hidden sm:hidden md:hidden lg:table-cell">Equipos</th>
                                     <th class="py-3 px-6 text-center">Acciones</th>
                                 </tr>
                                 </thead>
@@ -159,7 +165,12 @@
                                             </td>
                                             <td class="py-3 px-6 text-center hidden sm:hidden md:table-cell lg:table-cell">
                                                 <div class="flex items-center justify-center">
-                                                    {{\App\Models\User::find($liga->admin)->name}}
+                                                    {{$liga->user->name}}
+                                                </div>
+                                            </td>
+                                            <td class="py-3 px-6 text-center hidden sm:hidden md:hidden lg:table-cell">
+                                                <div class="flex items-center justify-center">
+                                                    {{$liga->equipos_count}}
                                                 </div>
                                             </td>
                                             <td class="py-3 px-6 text-center">
@@ -169,7 +180,7 @@
                                                             <i class="far fa-eye"></i>
                                                         </a>
                                                     </div>
-                                                    @if(\Illuminate\Support\Facades\Auth::id() === $liga->admin)
+                                                    @if(auth()->id() === $liga->admin)
                                                     <form action="{{route('liga.destroy', [$liga])}}" method="post">
                                                         @method("delete")
                                                         @csrf

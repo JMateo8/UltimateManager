@@ -13,8 +13,8 @@ class Liga extends Model
 
     protected $fillable = ["nombre", "admin", "password"];
 
-    public function admin(){
-        return $this->hasOne(User::class, "admin", "id");
+    public function user(){
+        return $this->belongsTo(User::class, "admin", "id");
     }
 
     public function equipos(){

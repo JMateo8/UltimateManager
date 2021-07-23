@@ -37,7 +37,7 @@
                                          name="nombre"
                                          required />
                             </div>
-                            <input type="hidden" name="user_id" value="{{\Illuminate\Support\Facades\Auth::id()}}">
+                            <input type="hidden" name="user_id" value="{{auth()->id()}}">
                             <x-button class="mt-4 bg-green-600" type="submit">
                                 {{ __('Crear') }}
                             </x-button>

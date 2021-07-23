@@ -7,7 +7,6 @@ use App\Models\Jornada;
 use App\Models\Jugador;
 use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class EquipoController extends Controller
@@ -19,8 +18,15 @@ class EquipoController extends Controller
      */
     public function index()
     {
-        $equipos = User::find(Auth::id())->equipos;
         $jornada_actual = Jornada::where("actual", 1)->pluck("id");
+        $equipos = Equipo::where("user_id", auth()->id())
+            ->with("ligas")
+            ->withCount([
+            'jugadores' => function ($query) use($jornada_actual) {
+                $query->where('jornada_id', $jornada_actual[0]);
+            }])
+            ->get();
+        //$equipos = User::find(\auth()->id())->equipos;
         return view("cliente.equipo.listado", ["equipos" => $equipos, "jornada_actual" => $jornada_actual[0]]);
     }
 

@@ -2,6 +2,9 @@
     $jornada = \App\Models\Jornada::where("actual", 1)->pluck("id")->toArray()[0];
     $cerrada = \App\Models\Jornada::find($jornada)->cerrada;
     $arrayJugadores = [];
+    $equipos = \App\Models\Equipo::with("user")->with("jugadores", function($q) {
+        $q->where("jornada_id", 4);
+    })->get()
 ?>
 <x-app-layout>
     <x-slot name="header">
@@ -10,13 +13,13 @@
         </h2>
     </x-slot>
     <div class="pt-6">
-            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                    <div class="p-6 bg-white border-b border-gray-200 flex justify-between items-center">
-                        <div>
-                            JORNADA <b>{{$jornada}}</b> || @if($cerrada) Cerrada @else Abierta @endif
-                        </div>
-                        <div class="flex justify-between gap-x-2">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                <div class="p-6 bg-white border-b border-gray-200 flex justify-between items-center">
+                    <div>
+                        JORNADA <b>{{$jornada}}</b> || @if($cerrada) Cerrada @else Abierta @endif
+                    </div>
+                    <div class="flex justify-between gap-x-2">
                         <div>
                             <form action="{{route("cerrarJornada")}}" method="POST">
                                 @csrf
@@ -37,11 +40,11 @@
                                 </button>
                             </form>
                         </div>
-                        </div>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
 
     <div class="pt-6">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
@@ -51,9 +54,58 @@
                         <thead>
                         <tr class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
                             <th class="py-3 px-6 text-left">Jugador</th>
-                            <th class="py-3 px-6 text-left">EQUIPO</th>
-                            <th class="py-3 px-6 text-left">JUGADOR</th>
-                            <th class="py-3 px-6 text-left">JORNADA</th>
+                            @foreach(\App\Models\Jornada::all() as $jorn)
+                                <th class="py-3 px-2 text-center whitespace-nowrap border-black border-l-2">
+                                    <div class="flex flex-col">
+                                        <span class="font-medium">J{{$jorn->id}}</span>
+                                    </div>
+                                </th>
+                            @endforeach
+                        </tr>
+                        </thead>
+                        <tbody class="text-gray-600 text-sm font-light">
+                        @foreach(\App\Models\Jugador::with("jornadas")->paginate(10) as $jugador)
+                            <tr class="border-b border-gray-200 hover:bg-gray-100">
+                                <td class="py-3 px-6 text-left whitespace-nowrap">
+                                    <div class="flex items-center">
+                                        <span class="font-medium">{{$jugador->nombre}}</span>
+                                    </div>
+                                </td>
+                                @forelse($jugador->jornadas as $jorn)
+                                    <td class="py-3 px-2 text-center whitespace-nowrap border-black border-l-2">
+                                        <div class="flex flex-col">
+                                            <span class="font-medium">{{$jorn->pivot->valoracion}}</span>
+                                        </div>
+                                    </td>
+                                @empty
+                                    <td class="py-3 px-2 text-center whitespace-nowrap border-black border-l-2">
+                                        <div class="flex flex-col">
+                                            <span class="font-medium">-</span>
+                                        </div>
+                                    </td>
+                                @endforelse
+                            </tr>
+                        @endforeach
+                        </tbody>
+                    </table>
+                    {{\App\Models\Jugador::with("jornadas")->paginate(10)->links()}}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="pt-6">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                <div class="p-6 bg-white border-b border-gray-200">
+                    <table class="min-w-max w-full table-auto">
+                        <thead>
+                        <tr class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
+                            <th class="py-3 px-6 text-left">Equipo</th>
+                            <th class="py-3 px-6 text-left">Jugador</th>
+                            <th class="py-3 px-6 text-left">ID EQUIPO</th>
+                            <th class="py-3 px-6 text-left">ID JUGADOR</th>
+                            <th class="py-3 px-6 text-left">ID JORNADA</th>
                             <th class="py-3 px-6 text-left">Array</th>
                         </tr>
                         </thead>
@@ -63,6 +115,11 @@
                                 $arrayJugadores[] = $equipo->jugadores->where("pivot.jornada_id",$jornada)->toArray();
                             ?>
                             <tr class="border-b border-gray-200 hover:bg-gray-100">
+                                <td class="py-3 px-6 text-left whitespace-nowrap">
+                                    <div class="flex flex-col">
+                                        <span>{{$equipo->nombre}}</span>
+                                    </div>
+                                </td>
                                 <td class="py-3 px-6 text-left whitespace-nowrap">
                                     <div class="flex flex-col">
                                         @foreach($equipo->jugadores->where("pivot.jornada_id",$jornada) as $jugador)
@@ -142,13 +199,18 @@
                     <table class="min-w-max w-full table-auto">
                         <thead>
                         <tr class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
-                            <th class="py-3 px-6 text-left">ID</th>
                             <th class="py-3 px-6 text-left">Nombre</th>
+                            <th class="py-3 px-6 text-left">Nombre</th>
+                            <th class="py-3 px-6 text-left">Puntuación</th>
                             <th class="py-3 px-6 text-left">Jugadores</th>
+                            <th class="py-3 px-6 text-left">ID JORNADA</th>
+                            <th class="py-3 px-6 text-left">ID EQUIPO</th>
+                            <th class="py-3 px-6 text-left">ID JUGADOR</th>
+                            <th class="py-3 px-6 text-left">Valoracion</th>
                         </tr>
                         </thead>
                         <tbody class="text-gray-600 text-sm font-light">
-                        @foreach(\App\Models\Equipo::all() as $equipo)
+                        @foreach($equipos as $equipo)
                             <tr class="border-b border-gray-200 hover:bg-gray-100">
                                 <td class="py-3 px-6 text-left whitespace-nowrap">
                                     <div class="flex items-center">
@@ -157,13 +219,47 @@
                                 </td>
                                 <td class="py-3 px-6 text-left whitespace-nowrap">
                                     <div class="flex items-center">
-                                        <span class="font-medium">{{$equipo->puntuacion}}</span>
+                                        <span class="font-medium">{{$equipo->user->name}}</span>
+                                    </div>
+                                </td>
+                                <td class="py-3 px-6 text-left whitespace-nowrap">
+                                    <div class="flex items-center">
+                                        <span class="font-medium">{{$equipo->puntuacion}} pts.</span>
                                     </div>
                                 </td>
                                 <td class="py-3 px-6 text-left whitespace-nowrap">
                                     <div class="flex flex-col">
-                                        @foreach($equipo->jugadores->where("pivot.jornada_id",$jornada) as $jugador)
+                                        @foreach($equipo->jugadores as $jugador)
+                                        {{info($jugador)}}
                                             <span class="font-medium">{{$jugador->nombre}}</span>
+                                        @endforeach
+                                    </div>
+                                </td>
+                                <td class="py-3 px-6 text-left whitespace-nowrap">
+                                    <div class="flex flex-col">
+                                        @foreach($equipo->jugadores as $jugador)
+                                            <span class="font-medium">{{$jugador->pivot->jornada_id}}</span>
+                                        @endforeach
+                                    </div>
+                                </td>
+                                <td class="py-3 px-6 text-left whitespace-nowrap">
+                                    <div class="flex flex-col">
+                                        @foreach($equipo->jugadores as $jugador)
+                                            <span class="font-medium">{{$jugador->pivot->equipo_id}}</span>
+                                        @endforeach
+                                    </div>
+                                </td>
+                                <td class="py-3 px-6 text-left whitespace-nowrap">
+                                    <div class="flex flex-col">
+                                        @foreach($equipo->jugadores as $jugador)
+                                            <span class="font-medium">{{$jugador->pivot->jugador_id}}</span>
+                                        @endforeach
+                                    </div>
+                                </td>
+                                <td class="py-3 px-6 text-left whitespace-nowrap">
+                                    <div class="flex flex-col">
+                                        @foreach($equipo->jugadores as $jugador)
+                                            <span class="font-medium">{{$jugador->pivot->jugador_id}}</span>
                                         @endforeach
                                     </div>
                                 </td>

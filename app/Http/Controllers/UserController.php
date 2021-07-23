@@ -3,14 +3,14 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 
-class User extends Controller
+class UserController extends Controller
 {
     //
     public function index(){
-        $users = \App\Models\User::all();
+        $users = User::all();
         return view('admin.user.listado', ["users" => $users]);
     }
 
@@ -36,7 +36,7 @@ class User extends Controller
             'password' => Hash::make($request->password)
         ]);
 
-        $user = new \App\Models\User($request->input());
+        $user = new User($request->input());
         $user->save();
 
         return redirect()->route("user.index")->with('status', "¡Usuario $user->name creado!");
@@ -48,7 +48,7 @@ class User extends Controller
      * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function show(\App\Models\User $user)
+    public function show(User $user)
     {
         //
     }
@@ -59,7 +59,7 @@ class User extends Controller
      * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function edit(\App\Models\User $user)
+    public function edit(User $user)
     {
         return view("admin.user.edit", ["user" => $user]);
     }
@@ -71,7 +71,7 @@ class User extends Controller
      * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, \App\Models\User $user)
+    public function update(Request $request, User $user)
     {
         $request->merge([
             'password' => Hash::make($request->password)
@@ -89,7 +89,7 @@ class User extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    public function destroy(\App\Models\User $user){
+    public function destroy(User $user){
         $user->delete();
         return redirect()->route("user.index")->with('status', "¡Usuario $user->name eliminado!");
     }

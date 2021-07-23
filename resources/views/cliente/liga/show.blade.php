@@ -78,9 +78,9 @@
                                             <span>{{number_format($equipo->puntuacion, 1, ",", "")}} pts.</span>
                                         </div>
                                     </td>
-                                    @if(\Illuminate\Support\Facades\Auth::user()->admin === 1
-                                        || $liga->admin === \Illuminate\Support\Facades\Auth::id()
-                                        || $equipo->user_id === \Illuminate\Support\Facades\Auth::id())
+                                    @if(auth()->user()->admin === 1
+                                        || $liga->admin === auth()->id()
+                                        || $equipo->user_id === auth()->id())
                                         <td class="py-3 px-6 text-left">
                                             <div class="flex item-center">
                                                 <form action="{{route('desapuntar')}}" method="POST" enctype="multipart/form-data">

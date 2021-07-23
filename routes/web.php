@@ -19,14 +19,14 @@ Route::get('/', function () {
 
 Route::get('/dashboard', function () {
     $users = \App\Models\User::all();
-    if (Auth::user()->admin === 1) {
+    if (auth()->user()->admin === 1) {
         return view('admin.dashboard', ["users" => $users]);
     } else {
-        return view('dashboard', ["users" => $users]);
+        return view('dashboard');
     }
 })->middleware(['auth'])->name('dashboard');
 
-Route::resource("user", \App\Http\Controllers\User::class)
+Route::resource("user", \App\Http\Controllers\UserController::class)
     ->middleware("auth")->middleware("admin");
 
 Route::group(["prefix" => "liga", "middleware" => ["auth"]], function (){

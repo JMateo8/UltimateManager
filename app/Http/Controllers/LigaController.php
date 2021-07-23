@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Equipo;
 use App\Models\Liga;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class LigaController extends Controller
@@ -17,14 +16,14 @@ class LigaController extends Controller
      */
     public function index()
     {
-        $userId = Auth::id();
-        $user = \App\Models\User::find($userId);
-        $ligas = Liga::all();
+        $user = auth()->user();
+        $ligas = Liga::with("user")->get();
         $ligasAdmin = $user->ligas;
         $equipos = $user->equipos;
-        $ligasActivas = Liga::whereHas('equipos', function($q) use($userId) {
-            $q->where('user_id', $userId);
-        })->get();
+        $ligasActivas = Liga::with(["user"])
+            ->whereHas('equipos', function($q) {
+                $q->where('user_id', \auth()->id());
+            })->get();
         /*
         $ligasLibres = Liga::whereDoesntHave('equipos', function($q) use($userId) {
             $q->where('user_id', $userId);
@@ -72,10 +71,9 @@ class LigaController extends Controller
      */
     public function show(Liga $liga)
     {
-        $userId = Auth::id();
         $equipos = $liga->equipos->sortByDesc("puntuacion");
-        $ligasActivas = Liga::whereHas('equipos', function($q) use($userId) {
-            $q->where('user_id', $userId);
+        $ligasActivas = Liga::whereHas('equipos', function($q) {
+            $q->where('user_id', auth()->id());
         })->pluck("id")->toArray();
 
         return view("cliente.liga.show", ["liga" => $liga, "equipos" => $equipos, "ligasActivas" => $ligasActivas]);
@@ -89,7 +87,7 @@ class LigaController extends Controller
      */
     public function edit(Liga $liga)
     {
-        $equipos = \App\Models\User::find(Auth::id())->equipos;
+        $equipos = auth()->user()->equipos;
         $nEq = $equipos->count();
         if ($nEq !== 0) {
             return view("cliente.liga.add", ["liga" => $liga, "equipos" => $equipos]);

@@ -68,7 +68,7 @@
                                                     <i class="far fa-edit"></i>
                                                 </a>
                                             </div>
-                                            @if(\Illuminate\Support\Facades\Auth::id() !== $u->id)
+                                            @if(auth()->id() !== $u->id)
                                             <form action="{{route('user.destroy', [$u])}}" method="post">
                                                 @method("delete")
                                                 @csrf

@@ -36,7 +36,7 @@
                                 }"
                              class="p-6">
                             <ul class="flex border-b">
-                             @if(\Illuminate\Support\Facades\Auth::user()->admin !== 1)
+                             @if(auth()->user()->admin !== 1)
                                 <li @click="openTab = 1" :class="{ '-mb-px': openTab === 1 }" class="-mb-px mr-1">
                                     <a :class="openTab === 1 ? activeClasses : inactiveClasses" class="bg-white inline-block py-2 px-4 font-semibold" href="#">
                                         Equipos inscritos
@@ -47,7 +47,7 @@
                                         Ligas creadas
                                     </a>
                                 </li>
-                                @endif
+                             @endif
                                 <li @click="openTab = 3" :class="{ '-mb-px': openTab === 3 }" class="mr-1">
                                     <a :class="openTab === 3 ? activeClasses : inactiveClasses" class="bg-white inline-block py-2 px-4 font-semibold" href="#">
                                         Todas las ligas
@@ -80,7 +80,7 @@
                                                 </td>
                                                 <td class="py-3 px-6 text-left">
                                                     <div class="flex items-center">
-                                                        <span>{{\App\Models\User::find($liga->admin)->name}}</span>
+                                                        <span>{{$liga->user->name}}</span>
                                                     </div>
                                                 </td>
                                                 <td class="py-3 px-6 text-left">
@@ -90,8 +90,8 @@
                                                                 <i class="far fa-eye"></i>
                                                             </a>
                                                         </div>
-                                                        @if(\Illuminate\Support\Facades\Auth::user()->admin === 1 ||
-                                                            $liga->admin===\Illuminate\Support\Facades\Auth::id())
+                                                        @if(auth()->user()->admin === 1 ||
+                                                            $liga->admin===auth()->id())
                                                             <form action="{{route('liga.destroy', [$liga])}}" method="post">
                                                                 @method("delete")
                                                                 @csrf
@@ -145,7 +145,7 @@
                                                     </td>
                                                     <td class="py-3 px-6 text-left hidden sm:table-cell md:table-cell lg:table-cell">
                                                         <div class="flex items-center">
-                                                            <span>{{\App\Models\User::find($liga->admin)->name}}</span>
+                                                            <span>{{auth()->user()->name}}</span>
                                                         </div>
                                                     </td>
                                                     <td class="py-3 px-6 text-left">
@@ -161,8 +161,8 @@
                                                                     </a>
                                                                 </div>
                                                             @endif
-                                                            @if(\Illuminate\Support\Facades\Auth::user()->admin === 1 ||
-                                                                $liga->admin===\Illuminate\Support\Facades\Auth::id())
+                                                            @if(auth()->user()->admin === 1 ||
+                                                                $liga->admin===auth()->id())
                                                             <form action="{{route('liga.destroy', [$liga])}}" method="post">
                                                                     @method("delete")
                                                                     @csrf
@@ -216,7 +216,7 @@
                                                 </td>
                                                 <td class="py-3 px-6 text-left">
                                                     <div class="flex items-center">
-                                                        {{\App\Models\User::find($liga->admin)->name}}
+                                                        {{$liga->user->name}}
                                                     </div>
                                                 </td>
                                                 <td class="py-3 px-6 text-left">
@@ -233,8 +233,8 @@
                                                             </a>
                                                         </div>
                                                         @endif
-                                                        @if(\Illuminate\Support\Facades\Auth::user()->admin === 1 ||
-                                                            $liga->admin===\Illuminate\Support\Facades\Auth::id())
+                                                        @if(auth()->user()->admin === 1 ||
+                                                            $liga->admin===auth()->id())
                                                         <form action="{{route('liga.destroy', [$liga])}}" method="post">
                                                                 @method("delete")
                                                                 @csrf

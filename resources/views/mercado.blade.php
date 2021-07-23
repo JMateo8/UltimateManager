@@ -32,7 +32,7 @@
                                     <th class="py-3 px-6 text-center">País</th>
                                     <th class="py-3 px-6 text-center">Altura</th>
                                     <th class="py-3 px-6 text-center">Edad</th>
-                                    @if(\Illuminate\Support\Facades\Auth::user()->admin === 1)
+                                    @if(auth()->user()->admin === 1)
                                         <th class="py-3 px-6 text-center">Acciones</th>
                                     @endif
                                 </tr>
@@ -76,7 +76,7 @@
                                                 {{$jugador->edad}}
                                             </div>
                                         </td>
-                                        @if(\Illuminate\Support\Facades\Auth::user()->admin === 1)
+                                        @if(auth()->user()->admin === 1)
                                             <td class="py-3 px-6 text-center">
                                                 <div class="flex item-center justify-center">
                                                     <div class="w-4 mr-2 transform text-yellow-500 hover:text-yellow-500 hover:scale-110">

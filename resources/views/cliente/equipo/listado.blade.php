@@ -55,18 +55,16 @@
                                 </td>
                                 <td class="py-3 px-6 text-left whitespace-nowrap hidden sm:table-cell md:table-cell lg:table-cell">
                                     <div class="flex">
-                                        {{$equipo->jugadores->where("pivot.jornada_id", $jornada_actual)->count()}}/10
+                                        {{$equipo->jugadores_count}}/10
                                     </div>
                                 </td>
                                 <td class="py-3 px-6 text-left whitespace-nowrap hidden sm:table-cell md:table-cell lg:table-cell">
                                     <div class="flex">
-                                        @if(count($equipo->ligas))
-                                        @foreach($equipo->ligas as $liga)
+                                        @forelse($equipo->ligas as $liga)
                                             {{$liga->nombre}}<br/>
-                                        @endforeach
-                                        @else
+                                        @empty
                                             0 ligas
-                                        @endif
+                                        @endforelse
                                     </div>
                                 </td>
                                 <td class="py-3 px-6 text-center">
