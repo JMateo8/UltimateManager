@@ -12,27 +12,27 @@
 
         <form method="POST" action="{{ route('register') }}">
             @csrf
-            <div class="border-b-2 border-black text-center mb-3">
+            <div class="border-2 border-black text-center mb-3 text-lg">
                 <b>Regístrate ahora</b>
             </div>
 
             <!-- Name -->
             <div>
-                <x-label for="name" :value="__('Name')" />
+                <x-label class="font-semibold text-base" for="name" :value="__('Nombre')" />
 
                 <x-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus />
             </div>
 
             <!-- Email Address -->
             <div class="mt-4">
-                <x-label for="email" :value="__('Email')" />
+                <x-label class="font-semibold text-base" for="email" :value="__('Correo electrónico')" />
 
                 <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required />
             </div>
 
             <!-- Password -->
             <div class="mt-4">
-                <x-label for="password" :value="__('Password')" />
+                <x-label class="font-semibold text-base" for="password" :value="__('Contraseña')" />
 
                 <x-input id="password" class="block mt-1 w-full"
                                 type="password"
@@ -42,7 +42,7 @@
 
             <!-- Confirm Password -->
             <div class="mt-4">
-                <x-label for="password_confirmation" :value="__('Confirm Password')" />
+                <x-label class="font-semibold text-base" for="password_confirmation" :value="__('Confirmar contraseña')" />
 
                 <x-input id="password_confirmation" class="block mt-1 w-full"
                                 type="password"
@@ -50,8 +50,10 @@
             </div>
 
             <div class="flex items-center justify-end mt-4">
-                <a class="underline text-sm text-gray-600 hover:text-gray-900" href="{{ route('login') }}">
-                    {{ __('¿Ya tienes cuenta?') }}
+                <a class="text-sm text-gray-600 hover:text-gray-900" href="{{ route('login') }}">
+                    <x-button type="button" class="ml-4">
+                        {{ __('¿Ya tienes cuenta?') }}
+                    </x-button>
                 </a>
 
                 <x-button class="ml-4">

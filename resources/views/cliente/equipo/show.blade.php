@@ -86,10 +86,12 @@
                                 </td>
                                 <td class="py-3 px-6 whitespace-nowrap">
                                     <div class="flex items-center justify-center">
-                                        @if(is_null($jugador->valoracion))
+                                        @if(sizeof($jugador->jornadas)===0)
                                             --- pts.
                                         @else
-                                            {{number_format($jugador->valoracion, 1, ",", "")}} pts.
+                                        @foreach($jugador->jornadas->where("id", $jornada) as $val_j)
+                                            {{number_format($val_j->pivot->valoracion, 1, ",", "")}} pts.
+                                        @endforeach
                                         @endif
                                     </div>
                                 </td>
@@ -151,11 +153,18 @@
                             <td class="py-3 px-6 text-center">
                                 <b>{{count($jugadores)}}/10</b> jugadores alineados
                             </td>
-                            <td class="py-3 px-6 text-center" colspan="3"></td>
+                            <td class="py-3 px-6 text-center" colspan="2"></td>
                             </td>
                             <td class="py-3 px-6 text-center">
-                                <b>{{number_format($val_jornada, 0, "", ".")}} pts.</b>
+                                @if(sizeof($equipo->jornadas)===0)
+                                    --- pts.
+                                @else
+                                    @foreach($equipo->jornadas->where("id", $jornada) as $val_eq_j)
+                                        {{number_format($val_eq_j->pivot->puntuacion, 1, ",", ".")}} pts.
+                                    @endforeach
+                                @endif
                             </td>
+                            <td class="py-3 px-6 text-center"></td>
                             <td class="py-3 px-6 text-center">
                                 <b>{{number_format($salario, 0, "", ".")}} €</b>
                             <td></td>

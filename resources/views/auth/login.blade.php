@@ -14,20 +14,20 @@
 
         <form method="POST" action="{{ route('login') }}">
             @csrf
-            <div class="border-b-2 border-black text-center">
+            <div class="border-2 border-black text-center text-lg">
                 <b>Inicia sesión</b>
             </div>
 
             <!-- Email Address -->
             <div class="pt-4">
-                <x-label for="email" :value="__('Email')" />
+                <x-label class="font-semibold text-base" for="email" :value="__('Correo electrónico')" />
 
                 <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus />
             </div>
 
             <!-- Password -->
             <div class="mt-4">
-                <x-label for="password" :value="__('Password')" />
+                <x-label class="font-semibold text-base" for="password" :value="__('Contraseña')" />
 
                 <x-input id="password" class="block mt-1 w-full"
                                 type="password"
@@ -50,12 +50,14 @@
                     </a>
                 @endif
 
-                    <a class="underline text-sm text-gray-600 hover:text-green-900" href="{{ route('register') }}">
-                        {{ __('¿No tienes cuenta?') }}
+                    <a class="text-sm text-gray-600 hover:text-green-900" href="{{ route('register') }}">
+                        <x-button type="button" class="ml-4">
+                            {{ __('Registrarse') }}
+                        </x-button>
                     </a>
 
                 <x-button class="ml-3">
-                    {{ __('Log in') }}
+                    {{ __('Entrar') }}
                 </x-button>
             </div>
         </form>

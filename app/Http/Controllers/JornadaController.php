@@ -50,9 +50,14 @@ class JornadaController extends Controller
         $newJornada->save();
 
         /*
-         * Traspasamos los jugadores de los equipos de una jornada a la siguiente
-         * y volvemos a la página anterior */
+        * Traspasamos los equipos y los jugadores de los equipos de una jornada a la siguiente
+        * y volvemos a la página anterior */
         foreach (Equipo::all() as $equipo) {
+            DB::table("equipo_jornada")->insert([
+                "equipo_id" => $equipo->id,
+                "jornada_id" => $newJornadaId
+            ]);
+
             foreach ($equipo->jugadores->where("pivot.jornada_id", $jornadaId) as $jugador) {
                 DB::table("equipo_jornada_jugador")->insert([
                     "equipo_id" => $jugador->pivot->equipo_id,

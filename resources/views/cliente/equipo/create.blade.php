@@ -17,7 +17,7 @@
                         </a>
                     </div>
                     <div class="p-6 bg-white">
-                        Crear nuevo equipo
+                        <b>Crear nuevo equipo</b>
                     </div>
                 </div>
             </div>
@@ -30,15 +30,16 @@
                         <form action="{{route('equipo.store')}}" method="POST" enctype="multipart/form-data">
                             @csrf
                             @method("POST")
-                            <div class="mt-4">
-                                <x-label for="nombre" :value="__('Nombre')" />
-                                <x-input id="nombre" class="mt-1 w-1/2"
-                                         type="text"
-                                         name="nombre"
-                                         required />
+                            <div class="flex flex-wrap justify-center -mx-3 mb-6">
+                                <div class="sm:w-3/4 w-full px-3">
+                                    <label for="nombre" class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
+                                        Nombre del equipo
+                                    </label>
+                                    <input name="nombre" id="nombre" type="text" required placeholder="Equipo XXX" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
+                                </div>
                             </div>
                             <input type="hidden" name="user_id" value="{{auth()->id()}}">
-                            <x-button class="mt-4 bg-green-600" type="submit">
+                            <x-button type="submit" class="bg-green-600">
                                 {{ __('Crear') }}
                             </x-button>
                         </form>
