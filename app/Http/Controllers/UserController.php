@@ -11,8 +11,7 @@ class UserController extends Controller
     //
     public function index(){
         $users = User::all();
-        $usersFiltro = User::all();
-        return view('admin.user.listado', ["users" => $users, "usersFiltro" => $usersFiltro]);
+        return view('admin.user.listado', ["users" => $users]);
     }
 
     /**
