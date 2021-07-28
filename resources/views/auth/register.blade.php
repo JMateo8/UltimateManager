@@ -56,7 +56,7 @@
                     </x-button>
                 </a>
 
-                <x-button class="ml-4">
+                <x-button class="ml-4 bg-green-600">
                     {{ __('Registrarse') }}
                 </x-button>
             </div>

@@ -44,19 +44,19 @@
             </div>
 
             <div class="flex items-center justify-between mt-4">
+                    <a class="text-sm text-gray-600 hover:text-green-900" href="{{ route('register') }}">
+                        <x-button type="button">
+                            {{ __('Registrarse') }}
+                        </x-button>
+                    </a>
+
                 @if (Route::has('password.request'))
                     <a class="underline text-sm text-gray-600 hover:text-green-900" href="{{ route('password.request') }}">
                         {{ __('¿Contraseña olvidada?') }}
                     </a>
                 @endif
 
-                    <a class="text-sm text-gray-600 hover:text-green-900" href="{{ route('register') }}">
-                        <x-button type="button" class="ml-4">
-                            {{ __('Registrarse') }}
-                        </x-button>
-                    </a>
-
-                <x-button class="ml-3">
+                <x-button class="ml-3 bg-green-600">
                     {{ __('Entrar') }}
                 </x-button>
             </div>

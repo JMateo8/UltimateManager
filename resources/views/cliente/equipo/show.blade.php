@@ -38,7 +38,6 @@
                                 <option value="{{$j}}" @if($j=== $jornada_actual) selected @endif>Jornada {{$j}}</option>
                             @endforeach
                         </select>
-                        <input type="hidden" name="equipo" value="{{$equipo->id}}"/>
                         <x-button type="submit" name="submit">Refrescar</x-button>
                     </form>
                 </div>
@@ -76,6 +75,7 @@
                                 </td>
                                 <td class="py-3 px-6 text-left whitespace-nowrap">
                                     <div class="flex items-center">
+{{--                                        <span class="font-medium">{{$jugador->equipo_euro->nombre}}</span>--}}
                                         <span class="font-medium">{{$jugador->equipo}}</span>
                                     </div>
                                 </td>
@@ -107,22 +107,19 @@
                                         {{number_format($jugador->precio, 0, "", ".")}} €
                                     </div>
                                 </td>
-                                @if(!\App\Models\Jornada::find($jornada)->cerrada)
+                                @if(!$jornadaObj->cerrada && $jornada == $jornada_actual)
                                 <td class="py-3 px-6 whitespace-nowrap">
                                     <div class="flex items-center justify-center">
-                                        <form action="{{route('detach', [$j])}}" method="POST">
+                                        <form action="{{route('detach', [$equipo, $jugador])}}" method="POST">
                                             @csrf
                                             @method("POST")
-                                            <input type="hidden" name="equipo" value="{{$equipo->id}}"/>
-                                            <input type="hidden" name="jugador" value="{{$jugador->id}}"/>
-                                            <input type="hidden" name="jornada" value="{{$jornada}}"/>
                                             <x-button class="bg-red-600">
                                                 <i class="fas fa-minus-square"></i>
                                             </x-button>
                                         </form>
                                     </div>
                                 </td>
-                                @elseif($jornada == $jornada_actual)
+                                @elseif($jornadaObj->cerrada && $jornada == $jornada_actual)
                                     <td class="py-3 px-6 whitespace-nowrap">
                                         <div class="flex items-center justify-center">
                                             <x-button class="bg-gray-600 cursor-not-allowed">
@@ -138,7 +135,7 @@
                                 <td class="py-3 px-6 text-center" colspan="6">
                                     <span>No hay ningún jugador</span>
                                 </td>
-                                @if($jornada == $jornada_actual && !\App\Models\Jornada::find($jornada)->cerrada)
+                                @if($jornada == $jornada_actual && !$jornadaObj->cerrada)
                                 <td class="text-center">
                                     <a href="{{route("equipo.edit", [$equipo])}}">
                                         <x-button class="bg-green-600">

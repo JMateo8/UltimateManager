@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Equipo;
+use App\Models\Jornada;
 use App\Models\Liga;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -71,12 +72,13 @@ class LigaController extends Controller
      */
     public function show(Liga $liga)
     {
+        $jornada_actual = Jornada::where("actual", 1)->pluck("id");
         $equipos = $liga->equipos->sortByDesc("puntuacion");
         $ligasActivas = Liga::whereHas('equipos', function($q) {
             $q->where('user_id', auth()->id());
         })->pluck("id")->toArray();
 
-        return view("cliente.liga.show", ["liga" => $liga, "equipos" => $equipos, "ligasActivas" => $ligasActivas]);
+        return view("cliente.liga.show", ["liga" => $liga, "equipos" => $equipos, "ligasActivas" => $ligasActivas, "jornada_actual" => $jornada_actual[0], "jornada" => "general"]);
     }
 
     /**
@@ -147,5 +149,15 @@ class LigaController extends Controller
     public function passVista(Request $request) {
         $liga = Liga::find($request->liga);
         return view("cliente.liga.pass", ['liga' => $liga]);
+    }
+
+    public function showJornada(Request $request, Liga $liga){
+        $jornada_actual = Jornada::where("actual", 1)->pluck("id");
+        $jornada = $request->jornada;
+        $equipos = $liga->equipos;
+        $ligasActivas = Liga::whereHas('equipos', function($q) {
+            $q->where('user_id', auth()->id());
+        })->pluck("id")->toArray();
+        return view("cliente.liga.show", ["liga" => $liga, "equipos" => $equipos, "ligasActivas" => $ligasActivas, "jornada" => $jornada, "jornada_actual" => $jornada_actual[0]]);
     }
 }

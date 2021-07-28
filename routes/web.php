@@ -26,6 +26,11 @@ Route::get('/dashboard', function () {
     }
 })->middleware(['auth'])->name('dashboard');
 
+//Route::group(["prefix" => "user", "middleware" => ["auth"]], function (){
+//    Route::post('/filtrarUser', [\App\Http\Controllers\UserController::class, 'filtrarUser'])
+//        ->name("filtrarUser");
+//});
+
 Route::resource("user", \App\Http\Controllers\UserController::class)
     ->middleware("auth")->middleware("admin");
 
@@ -38,21 +43,26 @@ Route::group(["prefix" => "liga", "middleware" => ["auth"]], function (){
 
     Route::post("/passvista", [\App\Http\Controllers\LigaController::class, 'passVista'])
         ->name("passvista");
+    Route::post('/{liga}/showJornada', [\App\Http\Controllers\LigaController::class, 'showJornada'])
+        ->name("showJornadaLiga");
 });
 
 Route::resource("liga", \App\Http\Controllers\LigaController::class)
     ->middleware("auth");
 
 Route::group(["prefix" => "equipo", "middleware" => ["auth"]], function (){
-    Route::post('/showJornada', [\App\Http\Controllers\EquipoController::class, 'showJornada'])
+    Route::post('/{equipo}/showJornada', [\App\Http\Controllers\EquipoController::class, 'showJornada'])
         ->name("showJornada");
-    Route::post("/detach", [\App\Http\Controllers\EquipoController::class, 'detach'])
+    Route::post("/{equipo}/{jugador}/detach", [\App\Http\Controllers\EquipoController::class, 'detach'])
         ->name("detach");
     Route::post("/attach", [\App\Http\Controllers\EquipoController::class, 'attach'])
         ->name("attach");
 });
 
-Route::resource("equipo", \App\Http\Controllers\EquipoController::class)->middleware("auth");
+Route::resource("equipo", \App\Http\Controllers\EquipoController::class)->middleware("auth")
+    ->missing(function () {
+        return redirect()->route("equipo.index");
+    });
 
 Route::resource("jugador", \App\Http\Controllers\JugadorController::class)
     ->middleware(["auth", "admin"]);

@@ -20,13 +20,34 @@
                     <div class="p-6 bg-white">
                         <a href="{{route("liga.edit", [$liga])}}">
                             <x-button class="bg-green-600">
-                                Inscrbir
+                                Inscribir
                             </x-button>
                         </a>
                     </div>
                     @endif
                     <div class="p-6 bg-white">
                         LIGA <b>{{$liga->nombre}}</b>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="pt-6">
+            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+                <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg flex justify-center items-center">
+                    <div class="p-6 bg-white border-b border-gray-200">
+                        <?php $jornadas = \App\Models\Jornada::all()->pluck('id'); ?>
+                        <form action="{{route("showJornadaLiga", [$liga])}}" method="post" class="m-0">
+                            @csrf
+                            @method("POST")
+                            <select class="border rounded-lg appearance-none focus:shadow-outline" name="jornada">
+                                <option value="general">General</option>
+                            @foreach($jornadas as $j)
+                                    <option value="{{$j}}" @if($j=== $jornada_actual) selected @endif>Jornada {{$j}}</option>
+                                @endforeach
+                            </select>
+                            <x-button type="submit" class="bg-gradient-to-r from-green-500 via-green-800 to-gray-800 hover:from-green-600 hover:via-green-900 hover:to-black" name="submit">Refrescar</x-button>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -42,7 +63,7 @@
                             </div>
                         @else
                             <div class="border-b-2 pb-3 mb-3">
-                                <b>Clasificación</b>
+                                <b>Clasificación <u>Jornada {{strtoupper($jornada)}}</u></b>
                             </div>
                             <table class="min-w-min w-full table-auto">
                             <thead>
@@ -75,7 +96,13 @@
                                     </td>
                                     <td class="py-3 px-6 text-left">
                                         <div class="flex items-center">
-                                            <span>{{number_format($equipo->puntuacion, 1, ",", "")}} pts.</span>
+                                            @if($jornada==="general")
+                                                <span>{{number_format($equipo->puntuacion, 1, ",", "")}} pts.</span>
+                                            @else
+                                                @foreach($equipo->jornadas->where("pivot.jornada_id", $jornada) as $eq)
+                                                <span>{{number_format($eq->pivot->puntuacion, 1, ",", "")}} pts.</span>
+                                                @endforeach
+                                            @endif
                                         </div>
                                     </td>
                                     @if(auth()->user()->admin === 1

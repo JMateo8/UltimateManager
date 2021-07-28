@@ -25,6 +25,19 @@
             </div>
         </div>
 
+<!--        --><?php
+//        $array_nombres = [];
+//        $array_rol = [];
+//        $array_email = [];
+//        foreach($users as $u){
+//            $array_nombres[] = $u->name;
+//            $array_rol[] = $u->admin;
+//            $array_email[] = $u->email;
+//        }
+//        $array_nombres = array_unique($array_nombres);
+//        $array_rol = array_unique($array_rol);
+//        ?>
+
         <div class="pt-6">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
@@ -39,7 +52,7 @@
                                 </tr>
                             </thead>
                             <tbody class="text-gray-600 text-sm font-light">
-                            @foreach($users as $u)
+                            @foreach($usersFiltro as $u)
                                 <tr class="border-b border-gray-200 hover:bg-gray-100">
                                     <td class="py-3 px-6 text-left whitespace-nowrap">
                                         <div class="flex items-center">
@@ -84,6 +97,23 @@
                                 </tr>
                             @endforeach
                             </tbody>
+{{--                            <tfoot>--}}
+{{--                                <td colspan="4">--}}
+{{--                            <form action="{{route("filtrarUser")}}" method="post" class="m-0">--}}
+{{--                                @csrf--}}
+{{--                                @method("POST")--}}
+{{--                                <div class="flex justify-between">--}}
+{{--                                    <select name="name">--}}
+{{--                                        <option value="" selected>Todos los nombres</option>--}}
+{{--                                    @foreach($array_nombres as $nombre)--}}
+{{--                                        <option value="{{$nombre}}">{{$nombre}}</option>--}}
+{{--                                    @endforeach--}}
+{{--                                    </select>--}}
+{{--                                    <x-button type="submit" name="submit">Filtrar</x-button>--}}
+{{--                                </div>--}}
+{{--                                    </form>--}}
+{{--                                </td>--}}
+{{--                            </tfoot>--}}
                         </table>
                     </div>
                 </div>

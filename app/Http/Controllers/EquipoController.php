@@ -63,15 +63,19 @@ class EquipoController extends Controller
     public function show(Equipo $equipo)
     {
         if ($equipo->user_id === \auth()->id()){
+            $jornadaObj = Jornada::where("actual", 1)->first();
             $jornada_actual = Jornada::where("actual", 1)->pluck("id");
-            $jugadores = $equipo->jugadores->where("pivot.jornada_id", $jornada_actual[0])->sortBy("nombre");
+            $jugadores = $equipo->jugadores->where("pivot.jornada_id", $jornada_actual[0])->sortByDesc("precio");
+                //->load(["jornadas"], "equipo_euro");
+            info($jugadores);
+            info($jornadaObj);
     //        $jugadores = [];
     //        foreach ($jugadoresPivot as $jugador){
     //            if ($jugador->pivot["jornada_id"] === $jornada_actual[0]){
     //                $jugadores[] = $jugador;
     //            }
     //        }
-            return view("cliente.equipo.show", ["equipo" => $equipo, "jugadores" => $jugadores, "jornada" => $jornada_actual[0], "jornada_actual" => $jornada_actual[0]]);
+            return view("cliente.equipo.show", ["equipo" => $equipo, "jugadores" => $jugadores, "jornadaObj" => $jornadaObj, "jornada" => $jornada_actual[0], "jornada_actual" => $jornada_actual[0]]);
         } else {
             return back()->withErrors(["error" => "Este equipo no es tuyo"]);
         }
@@ -99,7 +103,7 @@ class EquipoController extends Controller
         if (count($jugEq)>=10){
             return redirect()->route("liga.index")->withErrors(["error" => "Límite de jugadores superado"]);
         } else {
-            $jugadores = Jugador::orderByDesc("val_media")->get();
+            $jugadores = Jugador::with("equipo_euro")->orderByDesc("val_media")->get();
             return view("cliente.equipo.add", [
                 "jugadores" => $jugadores,
                 "jornada" => $jornada_actual[0],
@@ -133,46 +137,70 @@ class EquipoController extends Controller
         return redirect()->route("equipo.index")->with('status', "¡Equipo $equipo->nombre eliminado!");
     }
 
-    public function showJornada(Request $request){
+//    public function showJornada(Request $request){
+//        $jornada_actual = Jornada::where("actual", 1)->pluck("id");
+//        $jornada = $request->jornada;
+//        $equipo = Equipo::find($request->equipo);
+//        $jugadores = $equipo->jugadores->where("pivot.jornada_id", $jornada)->sortBy("nombre");
+////        $jugadores = [];
+////        foreach ($jugadoresPivot as $jugador){
+////            if ($jugador->pivot["jornada_id"] === $jornada){
+////                $jugadores[] = $jugador;
+////            }
+////        }
+//        return view("cliente.equipo.show", ["equipo" => $equipo, "jugadores" => $jugadores, "jornada" => $jornada, "jornada_actual" => $jornada_actual[0]]);
+//    }
+
+    public function showJornada(Request $request, Equipo $equipo){
+        $jornadaObj = Jornada::where("actual", 1)->first();
         $jornada_actual = Jornada::where("actual", 1)->pluck("id");
         $jornada = $request->jornada;
-        $equipo = Equipo::find($request->equipo);
-        $jugadores = $equipo->jugadores->where("pivot.jornada_id", $jornada)->sortBy("nombre");
-//        $jugadores = [];
-//        foreach ($jugadoresPivot as $jugador){
-//            if ($jugador->pivot["jornada_id"] === $jornada){
-//                $jugadores[] = $jugador;
-//            }
-//        }
-        return view("cliente.equipo.show", ["equipo" => $equipo, "jugadores" => $jugadores, "jornada" => $jornada, "jornada_actual" => $jornada_actual[0]]);
+        $jugadores = $equipo->jugadores->where("pivot.jornada_id", $jornada)->sortByDesc("precio");
+        return view("cliente.equipo.show", ["equipo" => $equipo, "jugadores" => $jugadores, "jornada" => $jornada, "jornadaObj" => $jornadaObj, "jornada_actual" => $jornada_actual[0]]);
     }
 
     public function attach(Request $request){
         $equipo = Equipo::find($request->equipo);
         $jugador = Jugador::find($request->jugador);
         $jornada_actual = Jornada::where("actual", 1)->pluck("id");
-        DB::table("equipo_jornada_jugador")->insert([
-            "equipo_id" => $equipo->id,
-            "jugador_id" => $jugador->id,
-            "jornada_id" => $jornada_actual[0]
-        ]);
+        $equipo->jugadores()->attach($jugador, ["jornada_id" => $jornada_actual[0]]);
+//        DB::table("equipo_jornada_jugador")->insert([
+//            "equipo_id" => $equipo->id,
+//            "jugador_id" => $jugador->id,
+//            "jornada_id" => $jornada_actual[0]
+//        ]);
 //        DB::table("equipo_jornada_jugador")->where('id_equipo', $equipo->id)
 //            ->where('id_jugador', $jugador->id)
 //            ->update(['jornada' => env("JORNADA_ACTUAL")]);
         return redirect()->route("equipo.show", [$equipo])->with('status', "¡Jugador $jugador->nombre fichado!");
     }
 
-    public function detach(Request $request){
-        $equipo = Equipo::find($request->equipo);
-        $jugador = Jugador::find($request->jugador);
-        //$equipo->jugadores()->detach($jugador->id);
-        DB::table("equipo_jornada_jugador")
-            ->where([
-                ['equipo_id', '=', $equipo->id],
-                ['jugador_id', '=', $jugador->id],
-                ['jornada_id', '=', $request->jornada]
-            ])
-            ->delete();
+//    public function detach(Request $request){
+//        $equipo = Equipo::find($request->equipo);
+//        $jugador = Jugador::find($request->jugador);
+//        $jornada_actual = Jornada::where("actual", 1)->pluck("id");
+//        //$equipo->jugadores()->detach($jugador->id);
+//        DB::table("equipo_jornada_jugador")
+//            ->where([
+//                ['equipo_id', '=', $equipo->id],
+//                ['jugador_id', '=', $jugador->id],
+//                ['jornada_id', '=', $jornada_actual[0]]
+//            ])
+//            ->delete();
+//
+//        return redirect()->route("equipo.show", [$equipo])->with('status', "¡Jugador $jugador->nombre vendido!");
+//    }
+
+    public function detach(Equipo $equipo, Jugador $jugador){
+        $jornada_actual = Jornada::where("actual", 1)->pluck("id");
+        $equipo->jugadores()->wherePivot("jornada_id", $jornada_actual[0])->detach($jugador);
+//        DB::table("equipo_jornada_jugador")
+//            ->where([
+//                ['equipo_id', '=', $equipo->id],
+//                ['jugador_id', '=', $jugador->id],
+//                ['jornada_id', '=', $jornada_actual[0]]
+//            ])
+//            ->delete();
 
         return redirect()->route("equipo.show", [$equipo])->with('status', "¡Jugador $jugador->nombre vendido!");
     }

@@ -11,7 +11,8 @@ class UserController extends Controller
     //
     public function index(){
         $users = User::all();
-        return view('admin.user.listado', ["users" => $users]);
+        $usersFiltro = User::all();
+        return view('admin.user.listado', ["users" => $users, "usersFiltro" => $usersFiltro]);
     }
 
     /**
@@ -94,5 +95,10 @@ class UserController extends Controller
         return redirect()->route("user.index")->with('status', "¡Usuario $user->name eliminado!");
     }
 
+//    public function filtrarUser(Request $request){
+//        $users = User::all();
+//        $usersFiltro = User::where("name", $request->name)->get();
+//        return view('admin.user.listado', ["users" => $users, "usersFiltro" => $usersFiltro]);
+//    }
 
 }
