@@ -18,9 +18,8 @@ Route::get('/', function () {
 });
 
 Route::get('/dashboard', function () {
-    $users = \App\Models\User::all();
     if (auth()->user()->admin === 1) {
-        return view('admin.dashboard', ["users" => $users]);
+        return view('admin.dashboard');
     } else {
         return view('dashboard');
     }
