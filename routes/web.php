@@ -77,4 +77,6 @@ Route::post("/cerrarJornada", [\App\Http\Controllers\JornadaController::class, '
 Route::post("/siguienteJornada", [\App\Http\Controllers\JornadaController::class, 'siguienteJornada'])
     ->name("siguienteJornada");
 
+Route::post('file-import', [\App\Http\Controllers\JornadaJugadorController::class, 'fileImport'])->name('file-import');
+
 require __DIR__.'/auth.php';
