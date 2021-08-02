@@ -103,6 +103,11 @@ class JugadorController extends Controller
      */
     public function update(FormJugador $request, Jugador $jugador)
     {
+        /*
+         * Unimos el apellido y el nombre y actualizamos el jugador
+         * si cumple con las normas de validación del FormJugador Request
+         */
+
         $request->merge([
             'nombre' => $request->apellido . ", " . $request->nombre
         ]);

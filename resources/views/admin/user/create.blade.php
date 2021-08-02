@@ -36,13 +36,16 @@
                                     <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="name">
                                         Nombre
                                     </label>
-                                    <input name="name" id="name" type="text" required placeholder="Jorge" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white">
+                                    <input name="name" value="{{old('name')}}" id="name" type="text" required placeholder="Jorge" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white">
                                 </div>
                                 <div class="w-full md:w-1/2 px-3">
                                     <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="email">
                                         Correo electrónico
                                     </label>
-                                    <input name="email" id="email" type="text" required placeholder="xxx@gmail.com" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
+                                    <input name="email" value="{{old('email')}}" id="email" type="text" required placeholder="xxx@gmail.com" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
+                                    @error('email')
+                                        <p class="text-red-600 text-sm font-semibold">{{$message}}</p>
+                                    @enderror
                                 </div>
                             </div>
                             <div class="flex flex-wrap -mx-3 mb-6">
@@ -52,8 +55,8 @@
                                     </label>
                                     <div class="relative">
                                         <select id="admin" required name="admin" class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
-                                            <option value="0" selected>Usuario</option>
-                                            <option value="1">Administrador</option>
+                                            <option value="0" @if(old('admin') === '0') selected @endif>Usuario</option>
+                                            <option value="1" @if(old('admin') === '1') selected @endif>Administrador</option>
                                         </select>
                                     </div>
                                 </div>
@@ -61,7 +64,10 @@
                                     <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="password">
                                         Contraseña
                                     </label>
-                                    <input required name="password" id="password" type="password" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
+                                    <input required name="password" value="{{old('password')}}" id="password" type="password" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
+                                    @error('password')
+                                        <p class="text-red-600 text-sm font-semibold">{{$message}}</p>
+                                    @enderror
                                 </div>
                             </div>
                             <x-button type="submit" class="bg-green-600">
