@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreEquipo;
 use App\Models\Equipo;
 use App\Models\Jornada;
 use App\Models\Jugador;
@@ -46,7 +47,7 @@ class EquipoController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreEquipo $request)
     {
         $equipo = new Equipo($request->input());
         $equipo->save();

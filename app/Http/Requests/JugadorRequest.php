@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class FormJugador extends FormRequest
+class JugadorRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.

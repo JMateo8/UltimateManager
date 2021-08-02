@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UserForm extends FormRequest
+class StoreEquipo extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,22 +24,14 @@ class UserForm extends FormRequest
     public function rules()
     {
         return [
-            'email' => 'unique:users,email',
-            'password' => 'required|min:8'
-        ];
-    }
-
-    public function attributes()
-    {
-        return [
-//            "password" => "contraseña"
+            'nombre' => 'unique:equipos,nombre'
         ];
     }
 
     public function messages()
     {
         return [
-            "email.unique" => "Este correo ya está registrado"
+            'nombre.unique' => 'Ya existe un equipo con este nombre'
         ];
     }
 }

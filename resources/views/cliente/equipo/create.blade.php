@@ -35,7 +35,10 @@
                                     <label for="nombre" class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
                                         Nombre del equipo
                                     </label>
-                                    <input name="nombre" id="nombre" type="text" required placeholder="Equipo XXX" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
+                                    <input name="nombre" value="{{old('nombre')}}" id="nombre" type="text" required placeholder="Equipo XXX" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
+                                    @error('nombre')
+                                    <p class="text-red-600 text-sm font-semibold">{{$message}}</p>
+                                    @enderror
                                 </div>
                             </div>
                             <input type="hidden" name="user_id" value="{{auth()->id()}}">

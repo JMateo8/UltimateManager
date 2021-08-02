@@ -15,7 +15,7 @@ class CreateLigasTable extends Migration
     {
         Schema::create('ligas', function (Blueprint $table) {
             $table->id();
-            $table->string("nombre");
+            $table->string("nombre")->unique();
             $table->unsignedBigInteger("admin");
             $table->foreign("admin")->references("id")->on("users");
             $table->string("password");

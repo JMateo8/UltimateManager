@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreLiga;
 use App\Models\Equipo;
 use App\Models\Jornada;
 use App\Models\Liga;
@@ -53,7 +54,7 @@ class LigaController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreLiga $request)
     {
         $request->merge([
             'password' => Hash::make($request->password)
@@ -107,6 +108,9 @@ class LigaController extends Controller
      */
     public function update(Request $request, Liga $liga)
     {
+        $request->validate([
+            'password' => 'required|min:8'
+        ]);
         $request->merge([
             'password' => Hash::make($request->password)
         ]);

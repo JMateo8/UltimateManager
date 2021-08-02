@@ -34,13 +34,19 @@
                                     <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="nombre">
                                         Nombre de la liga
                                     </label>
-                                    <input name="nombre" id="nombre" type="text" placeholder="Liga XXX" required class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white">
+                                    <input name="nombre" value="{{old('nombre')}}" id="nombre" type="text" placeholder="Liga XXX" required class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white">
+                                    @error('nombre')
+                                    <p class="text-red-600 text-sm font-semibold">{{$message}}</p>
+                                    @enderror
                                 </div>
                                 <div class="w-full md:w-1/2 px-3">
                                     <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="password">
                                         Contraseña
                                     </label>
                                     <input name="password" id="password" type="password" required class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
+                                    @error('password')
+                                    <p class="text-red-600 text-sm font-semibold">{{$message}}</p>
+                                    @enderror
                                 </div>
                             </div>
                             <input type="hidden" name="admin" value="{{auth()->id()}}">
