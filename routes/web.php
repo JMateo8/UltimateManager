@@ -47,7 +47,10 @@ Route::group(["prefix" => "liga", "middleware" => ["auth"]], function (){
 });
 
 Route::resource("liga", \App\Http\Controllers\LigaController::class)
-    ->middleware("auth");
+    ->middleware("auth")
+    ->missing(function () {
+        return redirect()->route("liga.index");
+    });
 
 Route::group(["prefix" => "equipo", "middleware" => ["auth"]], function (){
     Route::post('/{equipo}/showJornada', [\App\Http\Controllers\EquipoController::class, 'showJornada'])
@@ -67,9 +70,16 @@ Route::resource("jugador", \App\Http\Controllers\JugadorController::class)
     ->middleware(["auth", "admin"]);
 
 Route::get('/mercado', function (){
-    $jugadores = \App\Models\Jugador::with("equipo_euro")->get();
-    return view('mercado', ["jugadores" => $jugadores]);
-})->name("mercado");
+        $jugadores = \App\Models\Jugador::with("equipo_euro")->get();
+        return view('mercado', ["jugadores" => $jugadores]);
+    })->name("mercado")
+    ->missing(function () {
+        return back();
+    });
+
+Route::get('/faqs', function (){
+        return view('faqs');
+    })->name("faqs");
 
 Route::post("/cerrarJornada", [\App\Http\Controllers\JornadaController::class, 'cerrarJornada'])
     ->name("cerrarJornada");
