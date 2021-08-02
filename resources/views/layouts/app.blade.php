@@ -141,31 +141,32 @@
 </head>
 <body class="font-sans antialiased">
 <div class="min-h-screen bg-gray-100">
+
     @if(auth()->user()->admin)
         @include('admin.navigation')
     @else
         @include('layouts.navigation')
     @endif
 
-<!-- Page Heading -->
+    <!-- Page Heading -->
     <header class="bg-white shadow">
         <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
             {{ $header }}
         </div>
     </header>
 
-    @if($errors->any())
+    @error("error")
         <div class="bg-red-300 shadow">
             <div class="max-w-7xl flex justify-items-start mx-auto py-6 px-4 sm:px-6 lg:px-8">
                 <div class="pr-2">
                     <i class="fas fa-exclamation-circle"></i>
                 </div>
                 <div>
-                    <b class="text-red-700">{{$errors->first()}}</b>
+                    <b class="text-red-700">{{$message}}</b>
                 </div>
             </div>
         </div>
-    @endif
+    @enderror
 
     @if(session('status'))
         <div class="bg-indigo-300 shadow">

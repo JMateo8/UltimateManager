@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\FormJugador;
 use App\Models\Jugador;
 use Illuminate\Http\Request;
 
@@ -55,11 +56,14 @@ class JugadorController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(FormJugador $request)
     {
         $request->merge([
             'nombre' => $request->apellido . ", " . $request->nombre
         ]);
+//        $request->merge([
+//            'precio' => str_replace(",", ".", $request->precio)
+//        ]);
         $request->request->remove('apellido');
         $jugador = new Jugador($request->input());
         $jugador->save();
@@ -97,7 +101,7 @@ class JugadorController extends Controller
      * @param  \App\Models\Jugador  $jugador
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Jugador $jugador)
+    public function update(FormJugador $request, Jugador $jugador)
     {
         $request->merge([
             'nombre' => $request->apellido . ", " . $request->nombre

@@ -124,16 +124,17 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 bg-white border-b border-gray-200 flex justify-between items-center">
-                    <div>
-                        Resultados de la jornada <b>{{$jornada}}</b> || @if($cerrada) Disponible (jornada cerrada) @else No disponible (hasta cierre de jornada) @endif
+                    <div class="w-1/4">
+                        Resultados de la jornada <b>{{$jornada}}</b>
+{{--                        || @if($cerrada) Disponible (jornada cerrada) @else No disponible (hasta cierre de jornada) @endif--}}
                     </div>
-                    <div class="flex justify-between gap-x-2">
+                    <div class="w-3/4" flex justify-between gap-x-2">
                         <div>
                             <form action="{{ route('file-import') }}" method="POST" enctype="multipart/form-data">
                                 @csrf
                                 @method("POST")
                                 <div class="flex flex-row justify-between items-center gap-x-2">
-                                <div>
+                                <div class="w-3/4">
                                     <div @if(!$cerrada) class="relative border-solid rounded-lg border-solid border-2 border-gray-700 bg-gray-100 flex justify-center items-center opacity-50 cursor-not-allowed" @else class="relative border-solid rounded-lg border-solid border-2 border-green-700 hover:border-solid bg-green-100 flex justify-center items-center hover:bg-green-900 hover:text-white" @endif>
                                         <div class="absolute">
                                             <div class="flex flex-row items-center justify-center gap-x-2">
@@ -147,7 +148,7 @@
                                         <input type="file" name="file" required @if(!$cerrada) disabled @endif class="h-full w-full opacity-0">
                                     </div>
                                 </div>
-                                <div>
+                                <div class="w-1/4">
                                     <button type="submit" @if(!$cerrada) disabled class="bg-green-600 text-white font-bold py-2 px-4 rounded opacity-50 cursor-not-allowed" @else class="bg-transparent hover:bg-green-600 text-green-700 font-semibold hover:text-white py-2 px-4 border border-green-500 hover:border-black rounded" @endif>
                                         Subir archivo
                                     </button>
@@ -209,7 +210,7 @@
                 <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                     <div class="p-6 bg-white border-b border-gray-200">
                         <div class="pb-3 border-b-2 text-center">
-                            16 ligas creadas
+                            {{\App\Models\Liga::count()}} ligas creadas
                         </div>
                         <div class="pt-3 text-center">
                             <a href="{{route("liga.index")}}">
@@ -233,7 +234,7 @@
     <div class="pt-6">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 bg-white border-b border-gray-200">
+                <div class="p-6 bg-white border-b border-gray-200 overflow-x-auto">
                     <table class="min-w-max w-full table-auto">
                         <thead>
                         <tr class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
@@ -303,7 +304,7 @@
     <div class="pt-6">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 bg-white border-b border-gray-200">
+                <div class="p-6 bg-white border-b border-gray-200 overflow-x-auto">
                     <table class="min-w-max w-full table-auto">
                         <thead>
                         <tr class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
