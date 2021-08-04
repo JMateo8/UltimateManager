@@ -18,7 +18,7 @@
                     EQUIPO <b>{{$equipo->nombre}}</b>
                 </div>
                 <div class="p-6 bg-white">
-                    JORNADA <b>{{$jornada_actual2}}</b>
+                    JORNADA <b>{{$jornada}}</b>
                 </div>
             </div>
         </div>
@@ -26,7 +26,7 @@
 
     <div class="pt-6">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg flex justify-center items-center">
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg flex justify-between items-center">
                 <div class="p-6 bg-white border-b border-gray-200">
                 <?php $jornadas = \App\Models\Jornada::all()->pluck('id'); ?>
                     <form action="{{route("showJornada", [$equipo])}}" method="post" class="m-0">
@@ -38,9 +38,18 @@
                                 <option value="{{$j}}" @if($j=== $jornada_actual) selected @endif>Jornada {{$j}}</option>
                             @endforeach
                         </select>
-                        <x-button type="submit" name="submit">Refrescar</x-button>
+                        <x-button type="submit" name="submit" class="bg-indigo-700">Refrescar</x-button>
                     </form>
                 </div>
+                @if(!$jornadaObj->cerrada && $jornada == $jornada_actual)
+                <div class="p-6 bg-white">
+                    <form action="{{route("anularCambios", [$equipo])}}" method="post" class="m-0">
+                        @csrf
+                        @method("POST")
+                        <x-button type="submit" name="submit" class="bg-indigo-700">Anular cambios</x-button>
+                    </form>
+                </div>
+                @endif
             </div>
         </div>
     </div>

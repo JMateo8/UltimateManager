@@ -73,13 +73,13 @@ class LigaController extends Controller
      */
     public function show(Liga $liga)
     {
-        $jornada_actual = Jornada::where("actual", 1)->pluck("id");
+        $jornada_actual = Jornada::where("actual", 1)->first()->id;
         $equipos = $liga->equipos->sortByDesc("puntuacion");
         $ligasActivas = Liga::whereHas('equipos', function($q) {
             $q->where('user_id', auth()->id());
         })->pluck("id")->toArray();
 
-        return view("cliente.liga.show", ["liga" => $liga, "equipos" => $equipos, "ligasActivas" => $ligasActivas, "jornada_actual" => $jornada_actual[0], "jornada" => "general"]);
+        return view("cliente.liga.show", ["liga" => $liga, "equipos" => $equipos, "ligasActivas" => $ligasActivas, "jornada_actual" => $jornada_actual, "jornada" => "general"]);
     }
 
     /**
@@ -156,12 +156,12 @@ class LigaController extends Controller
     }
 
     public function showJornada(Request $request, Liga $liga){
-        $jornada_actual = Jornada::where("actual", 1)->pluck("id");
+        $jornada_actual = Jornada::where("actual", 1)->first()->id;
         $jornada = $request->jornada;
         $equipos = $liga->equipos;
         $ligasActivas = Liga::whereHas('equipos', function($q) {
             $q->where('user_id', auth()->id());
         })->pluck("id")->toArray();
-        return view("cliente.liga.show", ["liga" => $liga, "equipos" => $equipos, "ligasActivas" => $ligasActivas, "jornada" => $jornada, "jornada_actual" => $jornada_actual[0]]);
+        return view("cliente.liga.show", ["liga" => $liga, "equipos" => $equipos, "ligasActivas" => $ligasActivas, "jornada" => $jornada, "jornada_actual" => $jornada_actual]);
     }
 }

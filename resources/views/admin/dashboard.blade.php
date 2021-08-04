@@ -1,5 +1,5 @@
 <?php
-    $jornada = \App\Models\Jornada::where("actual", 1)->pluck("id")->toArray()[0];
+    $jornada = \App\Models\Jornada::where("actual", 1)->first()->id;
     $cerrada = \App\Models\Jornada::find($jornada)->cerrada;
     $arrayJugadores = [];
     $equipos = \App\Models\Equipo::with(["user", "jornadas"])->with("jugadores", function($q) use($jornada) {

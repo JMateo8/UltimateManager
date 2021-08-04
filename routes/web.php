@@ -59,6 +59,8 @@ Route::group(["prefix" => "equipo", "middleware" => ["auth"]], function (){
         ->name("detach");
     Route::post("/attach", [\App\Http\Controllers\EquipoController::class, 'attach'])
         ->name("attach");
+    Route::post('/{equipo}/anularCambios', [\App\Http\Controllers\EquipoController::class, 'anularCambios'])
+        ->name("anularCambios");
 });
 
 Route::resource("equipo", \App\Http\Controllers\EquipoController::class)->middleware("auth")

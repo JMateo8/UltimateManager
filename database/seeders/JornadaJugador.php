@@ -17,12 +17,12 @@ class JornadaJugador extends Seeder
     public function run()
     {
         foreach (Jugador::all() as $jugador){
-            $jugador->jornadas()->attach(Jornada::where("actual", 1)->get()->pluck("id")->toArray()[0], ["valoracion" => rand(0,40)]);
+            $jugador->jornadas()->attach(Jornada::where("actual", 1)->first()->id, ["valoracion" => rand(0,40)]);
         }
 //        for ($i=1; $i<=95; $i++){
 //            DB::table('jornada_jugador')->insert([
 //                'jugador_id' => $i,
-//                'jornada_id' => Jornada::where("actual", 1)->get()->pluck("id")->toArray()[0], //Jornada actual
+//                'jornada_id' => Jornada::where("actual", 1)->first()->id, //Jornada actual
 //                'valoracion' => rand(0,35),
 //            ]);
 //        }

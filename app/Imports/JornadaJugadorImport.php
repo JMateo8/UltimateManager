@@ -19,7 +19,7 @@ class JornadaJugadorImport implements ToModel, WithHeadingRow
         return new JornadaJugador([
             'jugador_id' => $row['jugador_id'],
             'valoracion' => $row['valoracion'],
-            'jornada_id' => Jornada::where("actual", 1)->get()->pluck("id")->toArray()[0],
+            'jornada_id' => Jornada::where("actual", 1)->first()->id,
         ]);
     }
 }

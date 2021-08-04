@@ -20,6 +20,9 @@
                         <div>
                             Añadir jugador al equipo <b>{{($equipo->nombre)}}</b>
                         </div>
+                        <div>
+                            JORNADA <b>{{($jornada)}}</b>
+                        </div>
                     </div>
 {{--                    <div class="p-6 text-center flex justify-between bg-white border-b border-gray-200">--}}
 {{--                        <div>--}}

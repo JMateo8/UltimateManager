@@ -1,9 +1,9 @@
 <?php
-    $jornada_actual = \App\Models\Jornada::where("actual", 1)->pluck("id");
+    $jornada_actual = \App\Models\Jornada::where("actual", 1)->first()->id;
     $equipos = \App\Models\Equipo::where("user_id", auth()->id())
         ->withCount([
             'jugadores' => function ($query) use($jornada_actual) {
-                $query->where('jornada_id', $jornada_actual[0]);
+                $query->where('jornada_id', $jornada_actual);
             }])
         ->take(4)
         ->get();
@@ -18,7 +18,7 @@
                 </h2>
             </div>
             <div>
-                Jornada actual: {{$jornada_actual[0]}}
+                Jornada actual: {{$jornada_actual}}
             </div>
         </div>
 
