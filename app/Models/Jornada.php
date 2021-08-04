@@ -17,7 +17,7 @@ class Jornada extends Model
 
     public function equipos(){
         return $this->belongsToMany(Equipo::class, "equipo_jornada", "jornada_id", "equipo_id")
-            ->withPivot("puntuacion");
+            ->withPivot(["puntuacion", "cambios"]);
     }
 
     public function jugadores(){

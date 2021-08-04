@@ -18,7 +18,7 @@
                     EQUIPO <b>{{$equipo->nombre}}</b>
                 </div>
                 <div class="p-6 bg-white">
-                    JORNADA <b>{{$jornada}}</b>
+                    JORNADA <b>{{$jornada_actual2}}</b>
                 </div>
             </div>
         </div>
@@ -107,7 +107,7 @@
                                         {{number_format($jugador->precio, 0, "", ".")}} €
                                     </div>
                                 </td>
-                                @if(!$jornadaObj->cerrada && $jornada == $jornada_actual)
+                                @if(!$jornadaObj->cerrada && $jornada == $jornada_actual && $cambios<3)
                                 <td class="py-3 px-6 whitespace-nowrap">
                                     <div class="flex items-center justify-center">
                                         <form action="{{route('detach', [$equipo, $jugador])}}" method="POST">
@@ -164,7 +164,9 @@
                             <td class="py-3 px-6 text-center"></td>
                             <td class="py-3 px-6 text-center">
                                 <b>{{number_format($salario, 0, "", ".")}} €</b>
-                            <td></td>
+                            <td>
+                                @if($jornada==$jornada_actual)Cambios: ({{3-$cambios}}/3 disponsibles) @endif
+                            </td>
                         </tr>
                         </tbody>
                     </table>

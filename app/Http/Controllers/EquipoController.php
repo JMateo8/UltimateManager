@@ -66,17 +66,19 @@ class EquipoController extends Controller
         if ($equipo->user_id === \auth()->id()){
             $jornadaObj = Jornada::where("actual", 1)->first();
             $jornada_actual = Jornada::where("actual", 1)->pluck("id");
+            $jornada_actual2 = Jornada::where("actual", 1)->first()->id;
             $jugadores = $equipo->jugadores->where("pivot.jornada_id", $jornada_actual[0])->sortByDesc("precio");
                 //->load(["jornadas"], "equipo_euro");
             info($jugadores);
             info($jornadaObj);
+            $cambios = $equipo->jornadas()->wherePivot("jornada_id", $jornada_actual[0])->first()->pivot->cambios;
     //        $jugadores = [];
     //        foreach ($jugadoresPivot as $jugador){
     //            if ($jugador->pivot["jornada_id"] === $jornada_actual[0]){
     //                $jugadores[] = $jugador;
     //            }
     //        }
-            return view("cliente.equipo.show", ["equipo" => $equipo, "jugadores" => $jugadores, "jornadaObj" => $jornadaObj, "jornada" => $jornada_actual[0], "jornada_actual" => $jornada_actual[0]]);
+            return view("cliente.equipo.show", ["cambios" => $cambios, "equipo" => $equipo, "jugadores" => $jugadores, "jornadaObj" => $jornadaObj, "jornada" => $jornada_actual[0], "jornada_actual" => $jornada_actual[0], "jornada_actual2" => $jornada_actual2]);
         } else {
             return back()->withErrors(["error" => "Este equipo no es tuyo"]);
         }
@@ -93,6 +95,7 @@ class EquipoController extends Controller
         $equipoId = $equipo->id;
         $jornada_actual = Jornada::where("actual", 1)->pluck("id");
         $jugEq = $equipo->jugadores->where("pivot.jornada_id", $jornada_actual[0])->pluck("id");
+        $cambios = $equipo->jornadas()->wherePivot("jornada_id", $jornada_actual[0])->first()->pivot->cambios;
 //        $jugEq = Jugador::join("equipo_jornada_jugador", "jugadors.id", "=", "equipo_jornada_jugador.id_jugador")
 //            ->where("equipo_jornada_jugador.id_equipo", $equipo->id)
 //            ->where("equipo_jornada_jugador.jornada", env("JORNADA_ACTUAL"))
@@ -102,7 +105,9 @@ class EquipoController extends Controller
 //            ->get(["jugadors.id"])->pluck("id")->toArray();
 
         if (count($jugEq)>=10){
-            return redirect()->route("liga.index")->withErrors(["error" => "Límite de jugadores superado"]);
+            return redirect()->route("equipo.index")->withErrors(["error" => "Límite de jugadores superado"]);
+        } elseif ($cambios>=3){
+            return redirect()->route("equipo.index")->withErrors(["error" => "Límite de cambios superado"]);
         } else {
             $jugadores = Jugador::with("equipo_euro")->orderByDesc("val_media")->get();
             return view("cliente.equipo.add", [
@@ -195,6 +200,7 @@ class EquipoController extends Controller
     public function detach(Equipo $equipo, Jugador $jugador){
         $jornada_actual = Jornada::where("actual", 1)->pluck("id");
         $equipo->jugadores()->wherePivot("jornada_id", $jornada_actual[0])->detach($jugador);
+        $equipo->jornadas()->wherePivot("jornada_id", $jornada_actual[0])->increment("cambios", 1);
 //        DB::table("equipo_jornada_jugador")
 //            ->where([
 //                ['equipo_id', '=', $equipo->id],
@@ -202,6 +208,13 @@ class EquipoController extends Controller
 //                ['jornada_id', '=', $jornada_actual[0]]
 //            ])
 //            ->delete();
+
+//        DB::table("equipo_jornada")
+//            ->where([
+//                ["equipo_id", $equipo->id],
+//                ["jornada_id", $jornada_actual[0]]
+//            ])
+//            ->increment("cambios", 1);
 
         return redirect()->route("equipo.show", [$equipo])->with('status', "¡Jugador $jugador->nombre vendido!");
     }
