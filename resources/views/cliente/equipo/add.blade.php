@@ -132,7 +132,7 @@
                                                 @if(!in_array($jugador->id, $jugEq->toArray()))
                                                     <td class="py-3 px-6 text-center">
                                                         <div class="flex item-center justify-center">
-                                                            <form action="{{route('attach')}}" method="POST">
+                                                            <form action="{{route('fichar')}}" method="POST">
                                                                 @csrf
                                                                 @method("POST")
                                                                 <input type="hidden" name="equipo" value="{{$equipo->id}}"/>
@@ -213,7 +213,7 @@
                                                     @if(!in_array($jugador->id, $jugEq->toArray()))
                                                         <td class="py-3 px-6 text-center">
                                                             <div class="flex item-center justify-center">
-                                                                <form action="{{route('attach')}}" method="POST">
+                                                                <form action="{{route('fichar')}}" method="POST">
                                                                     @csrf
                                                                     @method("POST")
                                                                     <input type="hidden" name="equipo" value="{{$equipo->id}}"/>
@@ -297,7 +297,7 @@
                                                     @if(!in_array($jugador->id, $jugEq->toArray()))
                                                         <td class="py-3 px-6 text-center">
                                                             <div class="flex item-center justify-center">
-                                                                <form action="{{route('attach')}}" method="POST">
+                                                                <form action="{{route('fichar')}}" method="POST">
                                                                     @csrf
                                                                     @method("POST")
                                                                     <input type="hidden" name="equipo" value="{{$equipo->id}}"/>
@@ -379,7 +379,7 @@
                                                     @if(!in_array($jugador->id, $jugEq->toArray()))
                                                         <td class="py-3 px-6 text-center">
                                                             <div class="flex item-center justify-center">
-                                                                <form action="{{route('attach')}}" method="POST">
+                                                                <form action="{{route('fichar')}}" method="POST">
                                                                     @csrf
                                                                     @method("POST")
                                                                     <input type="hidden" name="equipo" value="{{$equipo->id}}"/>
@@ -462,7 +462,7 @@
                                                     @if(!in_array($jugador->id, $jugEq->toArray()))
                                                         <td class="py-3 px-6 text-center">
                                                             <div class="flex item-center justify-center">
-                                                                <form action="{{route('attach')}}" method="POST">
+                                                                <form action="{{route('fichar')}}" method="POST">
                                                                     @csrf
                                                                     @method("POST")
                                                                     <input type="hidden" name="equipo" value="{{$equipo->id}}"/>
@@ -545,7 +545,7 @@
                                                     @if(!in_array($jugador->id, $jugEq->toArray()))
                                                         <td class="py-3 px-6 text-center">
                                                             <div class="flex item-center justify-center">
-                                                                <form action="{{route('attach')}}" method="POST">
+                                                                <form action="{{route('fichar')}}" method="POST">
                                                                     @csrf
                                                                     @method("POST")
                                                                     <input type="hidden" name="equipo" value="{{$equipo->id}}"/>
@@ -653,7 +653,7 @@
 {{--                                    @if(!in_array($j->id, $jugEq->toArray()))--}}
 {{--                                    <td class="py-3 px-6 text-center">--}}
 {{--                                        <div class="flex item-center justify-center">--}}
-{{--                                            <form action="{{route('attach')}}" method="POST">--}}
+{{--                                            <form action="{{route('fichar')}}" method="POST">--}}
 {{--                                                @csrf--}}
 {{--                                                @method("POST")--}}
 {{--                                                <input type="hidden" name="equipo" value="{{$equipo->id}}"/>--}}

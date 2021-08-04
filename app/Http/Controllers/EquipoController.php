@@ -106,7 +106,7 @@ class EquipoController extends Controller
         if (count($jugEq)>=10){
             return redirect()->route("equipo.index")->withErrors(["error" => "Límite de jugadores superado"]);
         } else {
-            $jugadores = Jugador::with("equipo_euro")->orderByDesc("val_media")->get();
+            $jugadores = Jugador::with("equipo_euro")->where("precio", "<", $equipo->dinero)->orderByDesc("val_media")->get();
             return view("cliente.equipo.add", [
                 "jugadores" => $jugadores,
                 "jornada" => $jornada_actual,
@@ -163,11 +163,12 @@ class EquipoController extends Controller
         return view("cliente.equipo.show", ["cambios" => $cambios, "equipo" => $equipo, "jugadores" => $jugadores, "jornada" => $jornada, "jornadaObj" => $jornadaObj, "jornada_actual" => $jornada_actual]);
     }
 
-    public function attach(Request $request){
+    public function fichar(Request $request){
         $equipo = Equipo::find($request->equipo);
         $jugador = Jugador::find($request->jugador);
         $jornada_actual = Jornada::where("actual", 1)->first()->id;
         $equipo->jugadores()->attach($jugador, ["jornada_id" => $jornada_actual]);
+        $equipo->decrement("dinero", $jugador->precio);
 //        DB::table("equipo_jornada_jugador")->insert([
 //            "equipo_id" => $equipo->id,
 //            "jugador_id" => $jugador->id,
@@ -195,10 +196,11 @@ class EquipoController extends Controller
 //        return redirect()->route("equipo.show", [$equipo])->with('status', "¡Jugador $jugador->nombre vendido!");
 //    }
 
-    public function detach(Equipo $equipo, Jugador $jugador){
+    public function vender(Equipo $equipo, Jugador $jugador){
         $jornada_actual = Jornada::where("actual", 1)->first()->id;
         $equipo->jugadores()->wherePivot("jornada_id", $jornada_actual)->detach($jugador);
         $equipo->jornadas()->wherePivot("jornada_id", $jornada_actual)->increment("cambios", 1);
+        $equipo->increment("dinero", $jugador->precio);
 //        DB::table("equipo_jornada_jugador")
 //            ->where([
 //                ['equipo_id', '=', $equipo->id],
@@ -221,12 +223,21 @@ class EquipoController extends Controller
         $jornada_actual = Jornada::where("actual", 1)->first()->id;
         /** Jugadores de la jornada actual, que quitamos de la plantilla */
         $jugadoresActuales = $equipo->jugadores()->wherePivot("jornada_id", $jornada_actual)->pluck("id");
+        $preciosActuales = $equipo->jugadores()->wherePivot("jornada_id", $jornada_actual)->pluck("precio")->toArray();
         $equipo->jugadores()->wherePivot("jornada_id", $jornada_actual)->detach($jugadoresActuales, ["jornada_id" => $jornada_actual]);
         /** Jugadores de la jornada anterior, que añadimos a la plantilla */
         $jugadoresNew = $equipo->jugadores()->wherePivot("jornada_id", $jornada_actual-1)->pluck("id");
+        $preciosNew = $equipo->jugadores()->wherePivot("jornada_id", $jornada_actual-1)->pluck("precio")->toArray();
         $equipo->jugadores()->wherePivot("jornada_id", $jornada_actual)->attach($jugadoresNew, ["jornada_id" => $jornada_actual]);
-        /** Cambios a 0 */
+        /** Cambios a 0 y  dinero */
         $equipo->jornadas()->wherePivot("jornada_id", $jornada_actual)->update(["cambios" => 0]);
+        info($equipo->dinero);
+        info($preciosNew);
+        info(array_sum($preciosNew));
+        info($preciosActuales);
+        info(array_sum($preciosActuales));
+        $equipo->dinero = $equipo->dinero - array_sum($preciosNew) + array_sum($preciosActuales);
+        $equipo->save();
         return redirect()->route("equipo.show", [$equipo])->with('status', "¡Cambios anulados!");
     }
 }

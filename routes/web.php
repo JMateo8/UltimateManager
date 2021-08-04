@@ -55,10 +55,10 @@ Route::resource("liga", \App\Http\Controllers\LigaController::class)
 Route::group(["prefix" => "equipo", "middleware" => ["auth"]], function (){
     Route::post('/{equipo}/showJornada', [\App\Http\Controllers\EquipoController::class, 'showJornada'])
         ->name("showJornada");
-    Route::post("/{equipo}/{jugador}/detach", [\App\Http\Controllers\EquipoController::class, 'detach'])
-        ->name("detach");
-    Route::post("/attach", [\App\Http\Controllers\EquipoController::class, 'attach'])
-        ->name("attach");
+    Route::post("/{equipo}/{jugador}/vender", [\App\Http\Controllers\EquipoController::class, 'vender'])
+        ->name("vender");
+    Route::post("/fichar", [\App\Http\Controllers\EquipoController::class, 'fichar'])
+        ->name("fichar");
     Route::post('/{equipo}/anularCambios', [\App\Http\Controllers\EquipoController::class, 'anularCambios'])
         ->name("anularCambios");
 });
