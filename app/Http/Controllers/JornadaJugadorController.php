@@ -22,8 +22,21 @@ class JornadaJugadorController extends Controller
      */
     public function fileImport(Request $request)
     {
-        Excel::import(new JornadaJugadorImport, $request->file('file')->store('temp'));
-        return back();
+        $filename = $request->file->getClientOriginalName();
+        if (preg_match("/.xlsx$/", $filename)) {
+            try {
+                Excel::import(new JornadaJugadorImport, $request->file('file')->store('temp'));
+            } catch (\InvalidArgumentException $ex) {
+                return redirect()->back()->withErrors(["error" => '¡Algún dato de las columnas es inválido!']);
+            } catch (\Exception $ex) {
+                return redirect()->back()->withErrors(["error" => '¡Error en el archivo ' . $request->file->getClientOriginalName() . "!"]);
+            } catch (\Error $ex) {
+                return redirect()->back()->withErrors(["error" => $ex->getMessage()]);
+            }
+        } else {
+            return redirect()->back()->withErrors(["error" => "Tipo de archivo no deseado"]);
+        }
+        return redirect()->back()->with('success', '¡Jornada actualizada correctamente!');
     }
 
     /**

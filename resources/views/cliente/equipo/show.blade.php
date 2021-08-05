@@ -6,7 +6,7 @@
     </x-slot>
     <div class="pt-6">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg flex items-center justify-between">
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg flex items-center justify-between overflow-x-auto">
                 <div class="p-6 bg-white">
                     <a href="{{route("equipo.index")}}">
                         <x-button>
@@ -26,7 +26,7 @@
 
     <div class="pt-6">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg flex justify-between items-center">
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg flex justify-between items-center overflow-x-auto">
                 <div class="p-6 bg-white border-b border-gray-200">
                 <?php $jornadas = \App\Models\Jornada::all()->pluck('id'); ?>
                     <form action="{{route("showJornada", [$equipo])}}" method="post" class="m-0">
@@ -72,16 +72,16 @@
 
     <div class="pt-6">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg overflow-x-auto">
                 <div class="p-6 bg-white border-b border-gray-200">
                     <table class="min-w-max w-full table-auto">
                         <thead>
                         <tr class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
                             <th class="py-3 px-6 text-left">Jugador</th>
-                            <th class="py-3 px-6 text-left">Equipo</th>
-                            <th class="py-3 px-6 text-left">Posición</th>
+                            <th class="py-3 px-6 text-left hidden sm:hidden md:hidden lg:table-cell">Equipo</th>
+                            <th class="py-3 px-6 text-left hidden sm:hidden md:hidden lg:table-cell">Posición</th>
                             <th class="py-3 px-6 text-left">Valoración J<b>{{$jornada}}</b></th>
-                            <th class="py-3 px-6 text-center">Valoración media</th>
+                            <th class="py-3 px-6 text-center hidden sm:hidden md:hidden lg:table-cell">Valoración media</th>
                             <th class="py-3 px-6 text-center">Precio</th>
                             @if($jornada == $jornada_actual)
                             <th class="py-3 px-6 text-center">Acciones</th>
@@ -98,19 +98,19 @@
                                         <span class="font-medium">{{$jugador->nombre}}</span>
                                     </div>
                                 </td>
-                                <td class="py-3 px-6 text-left whitespace-nowrap">
+                                <td class="py-3 px-6 text-left whitespace-nowrap hidden sm:hidden md:hidden lg:table-cell">
                                     <div class="flex items-center">
 {{--                                        <span class="font-medium">{{$jugador->equipo_euro->nombre}}</span>--}}
                                         <span class="font-medium">{{$jugador->equipo}}</span>
                                     </div>
                                 </td>
-                                <td class="py-3 px-6 text-center">
+                                <td class="py-3 px-6 text-center hidden sm:hidden md:hidden lg:table-cell">
                                     <div class="flex items-center">
                                         {{$jugador->posicion}}
                                     </div>
                                 </td>
                                 <td class="py-3 px-6 whitespace-nowrap">
-                                    <div class="flex items-center justify-center">
+                                    <div class="flex items-center justify-center ">
                                         @if(sizeof($jugador->jornadas)===0)
                                             --- pts.
                                         @else
@@ -120,7 +120,7 @@
                                         @endif
                                     </div>
                                 </td>
-                                <td class="py-3 px-6 whitespace-nowrap">
+                                <td class="py-3 px-6 whitespace-nowrap hidden sm:hidden md:hidden lg:table-cell">
                                     <div class="flex items-center justify-center">
                                         <?php ($val_jornada+=$jugador->val_media)?>
                                         {{number_format($jugador->val_media, 1, ",", "")}}
@@ -175,7 +175,7 @@
                             <td class="py-3 px-6 text-center">
                                 <b>{{count($jugadores)}}/10</b> jugadores alineados
                             </td>
-                            <td class="py-3 px-6 text-center" colspan="2"></td>
+                            <td class="py-3 px-6 text-center hidden sm:hidden md:hidden lg:table-cell" colspan="2"></td>
                             </td>
                             <td class="py-3 px-6 text-center">
                                 @if(sizeof($equipo->jornadas)===0)
@@ -186,10 +186,10 @@
                                     @endforeach
                                 @endif
                             </td>
-                            <td class="py-3 px-6 text-center"></td>
+                            <td class="py-3 px-6 text-center hidden sm:hidden md:hidden lg:table-cell"></td>
                             <td class="py-3 px-6 text-center">
                                 <b>{{number_format($salario, 0, "", ".")}} €</b>
-                            <td>
+                            <td class="py-3 px-6 text-center">
                                 @if($jornada==$jornada_actual)Cambios: ({{3-$cambios}}/3 disponsibles) @endif
                             </td>
                         </tr>
