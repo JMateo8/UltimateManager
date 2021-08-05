@@ -31,7 +31,7 @@ Route::get('/dashboard', function () {
 //});
 
 Route::resource("user", \App\Http\Controllers\UserController::class)
-    ->middleware("auth")->middleware("admin");
+    ->middleware(["auth", "admin", "password.confirm"]);
 
 Route::group(["prefix" => "liga", "middleware" => ["auth"]], function (){
     Route::post("/inscribir", [\App\Http\Controllers\LigaController::class, 'inscribir'])
