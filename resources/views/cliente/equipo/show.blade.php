@@ -132,7 +132,11 @@
                                             --- pts.
                                         @else
                                         @foreach($jugador->jornadas->where("id", $jornada) as $val_j)
-                                            {{number_format($val_j->pivot->valoracion, 1, ",", "")}} pts.
+                                                @if(!$jugador->pivot->capitan)
+                                                    <span>{{number_format($val_j->pivot->valoracion, 1, ",", "")}} pts.</span>
+                                                @else
+                                                    <span class="text-green-700">{{number_format(($val_j->pivot->valoracion*2), 1, ",", "")}} pts. (x2)</span>
+                                                @endif
                                         @endforeach
                                         @endif
                                     </div>
@@ -212,9 +216,11 @@
                             <td class="py-3 px-6 text-center hidden sm:hidden md:hidden lg:table-cell"></td>
                             <td class="py-3 px-6 text-center">
                                 <b>{{number_format($salario, 0, "", ".")}} €</b>
+                            @if($jornada==$jornada_actual)
                             <td class="py-3 px-6 text-center">
-                                @if($jornada==$jornada_actual)Cambios: ({{3-$cambios}}/3 disponsibles) @endif
+                                Cambios: ({{3-$cambios}}/3 disponsibles)
                             </td>
+                            @endif
                         </tr>
                         </tbody>
                     </table>
