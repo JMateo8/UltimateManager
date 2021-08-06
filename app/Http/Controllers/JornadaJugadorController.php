@@ -36,7 +36,7 @@ class JornadaJugadorController extends Controller
         } else {
             return redirect()->back()->withErrors(["error" => "Tipo de archivo no deseado"]);
         }
-        return redirect()->back()->with('success', '¡Jornada actualizada correctamente!');
+        return redirect()->back()->with('status', '¡Jornada actualizada correctamente!');
     }
 
     /**

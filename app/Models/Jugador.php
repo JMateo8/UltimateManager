@@ -17,7 +17,7 @@ class Jugador extends Model
 
     public function equipos(){
         return $this->belongsToMany(Equipo::class, "equipo_jornada_jugador", "jugador_id", "equipo_id")
-            ->withPivot("jornada_id");
+            ->withPivot(["jornada_id", "capitan"]);
     }
 
     public function jornadas(){
