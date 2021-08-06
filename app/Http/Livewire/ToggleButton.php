@@ -39,7 +39,9 @@ class ToggleButton extends Component
 //        $jornada = Jornada::where("actual", 1)->first()->id;
         $eq = \App\Models\Equipo::find($this->equipo);
         $eq->jugadores()->where("jornada_id", $this->jornada)->where("capitan", 1)->update(["capitan" => 0]);
-        $eq->jugadores()->where("jornada_id", $this->jornada)->where("jugador_id", $this->jugador)->update(["capitan" => 1]);
+        if (!$this->capitan){
+            $eq->jugadores()->where("jornada_id", $this->jornada)->where("jugador_id", $this->jugador)->update(["capitan" => 1]);
+        }
 //        DB::table("equipo_jornada_jugador")
 //            ->where("equipo_id", $this->equipo)
 //            ->where("jornada_id", $this->jornada)

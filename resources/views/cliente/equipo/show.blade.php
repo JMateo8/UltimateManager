@@ -180,9 +180,10 @@
                         @endforeach
                         @for($i=$jugadores->count(); $i<10; $i++)
                             <tr class="border-b border-gray-200 hover:bg-gray-100">
-                                <td class="py-3 px-6 text-center" colspan="6">
+                                <td class="py-3 px-6 text-center" colspan="3">
                                     <span>No hay ningún jugador</span>
                                 </td>
+                                <td class="py-3 px-6 whitespace-nowrap hidden sm:hidden md:hidden lg:table-cell" colspan="3"></td>
                                 @if($jornada == $jornada_actual && !$jornadaObj->cerrada)
                                 <td class="text-center">
                                     <a href="{{route("equipo.edit", [$equipo])}}">
@@ -199,7 +200,6 @@
                                 <b>{{count($jugadores)}}/10</b> jugadores alineados
                             </td>
                             <td class="py-3 px-6 text-center hidden sm:hidden md:hidden lg:table-cell" colspan="2"></td>
-                            </td>
                             <td class="py-3 px-6 text-center">
                                 @if(sizeof($equipo->jornadas)===0)
                                     --- pts.
