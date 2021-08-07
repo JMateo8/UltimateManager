@@ -28,15 +28,15 @@
         <div class="pt-6">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                    <div class="p-6 text-center bg-white border-b border-gray-200">
+                    <div class="p-6 text-center bg-white border-b border-gray-200 overflow-x-auto">
                         <table id="users" class="min-w-max w-full table-auto">
                             <thead>
-                                <tr class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
-                                    <th class="py-3 px-6 text-left">Nombre</th>
-                                    <th class="py-3 px-6 text-center">Admin</th>
-                                    <th class="py-3 px-6 text-center">Correo</th>
-                                    <th class="py-3 px-6 text-center">Acciones</th>
-                                </tr>
+                            <tr class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
+                                <th class="py-3 px-6 text-left">Nombre</th>
+                                <th class="py-3 px-6 text-center">Admin</th>
+                                <th class="py-3 px-6 text-center">Correo</th>
+                                <th class="py-3 px-6 text-center">Acciones</th>
+                            </tr>
                             </thead>
                             <tbody class="text-gray-600 text-sm font-light">
                             @foreach($users as $u)
@@ -49,9 +49,11 @@
                                     <td class="py-3 px-6 text-left">
                                         <div class="flex items-center justify-center">
                                             @if($u->admin===1)
-                                                <span class="inline-flex items-center justify-center px-2 py-1 mr-2 text-xs font-bold leading-none text-indigo-100 bg-indigo-600 rounded-full">Administrador</span>
+                                                <span
+                                                    class="inline-flex items-center justify-center px-2 py-1 mr-2 text-xs font-bold leading-none text-indigo-100 bg-indigo-600 rounded-full">Administrador</span>
                                             @else
-                                                <span class="inline-flex items-center justify-center px-2 py-1 mr-2 text-xs font-bold leading-none text-green-100 bg-green-600 rounded-full">User</span>
+                                                <span
+                                                    class="inline-flex items-center justify-center px-2 py-1 mr-2 text-xs font-bold leading-none text-green-100 bg-green-600 rounded-full">User</span>
                                             @endif
                                         </div>
                                     </td>
@@ -60,24 +62,25 @@
                                             {{$u->email}}
                                         </div>
                                     </td>
-
                                     <td class="py-3 px-6 text-center">
                                         <div class="flex item-center justify-center">
-                                            <div class="w-4 mr-2 transform text-yellow-500 hover:text-yellow-500 hover:scale-110">
+                                            <div
+                                                class="w-4 mr-2 transform text-yellow-500 hover:text-yellow-500 hover:scale-110">
                                                 <a href="{{route("user.edit", [$u] )}}" title="Editar">
                                                     <i class="far fa-edit"></i>
                                                 </a>
                                             </div>
                                             @if(auth()->id() !== $u->id)
-                                            <form action="{{route('user.destroy', [$u])}}" method="post">
-                                                @method("delete")
-                                                @csrf
-                                                <div class="w-4 mr-2 transform text-red-500 hover:text-red-500 hover:scale-110">
-                                                    <button type="submit" title="Eliminar">
-                                                        <i class="far fa-trash-alt"></i>
-                                                    </button>
-                                                </div>
-                                            </form>
+                                                <form action="{{route('user.destroy', [$u])}}" method="post">
+                                                    @method("delete")
+                                                    @csrf
+                                                    <div
+                                                        class="w-4 mr-2 transform text-red-500 hover:text-red-500 hover:scale-110">
+                                                        <button type="submit" title="Eliminar">
+                                                            <i class="far fa-trash-alt"></i>
+                                                        </button>
+                                                    </div>
+                                                </form>
                                             @endif
                                         </div>
                                     </td>
@@ -98,10 +101,10 @@
                     buttons: [
                         'copy', 'excel', 'pdf'
                     ],
-                    "order": [[ 1, "asc" ]],
+                    "order": [[1, "asc"]],
                     "pagingType": "full_numbers",
                     pageLength: 10,
-                    lengthMenu: [ [10, 25, 50, -1], [10, 25, 50, "All"] ],
+                    lengthMenu: [[10, 25, 50, -1], [10, 25, 50, "All"]],
                 }).columns.adjust().responsive.recalc();
             });
         </script>
