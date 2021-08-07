@@ -18,7 +18,7 @@
                 </h2>
             </div>
             <div>
-                Jornada actual: {{$jornada_actual}}
+                JORNADA ACTUAL: {{$jornada_actual}}
             </div>
         </div>
 

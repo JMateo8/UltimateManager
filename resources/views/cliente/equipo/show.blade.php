@@ -45,7 +45,21 @@
                     </form>
                 </div>
                 @if(!$jornadaObj->cerrada && $jornada == $jornada_actual)
-                    <div class="flex justify-between items-center">
+                    <div class="flex justify-between items-center gap-x-2">
+                        <div
+                            class="widget p-4 rounded-lg bg-white border border-gray-100 dark:bg-gray-900 dark:border-gray-800">
+                            <div class="flex flex-row items-center justify-between gap-x-4">
+                                <div class="flex flex-col">
+                                    <div class="text-xs uppercase font-light text-gray-500">
+                                        Cambios disponibles
+                                    </div>
+                                    <div class="text-xl font-bold text-center">
+                                        <b>{{3-$cambios}}/3</b>
+                                    </div>
+                                </div>
+                                <i class="fas fa-exchange-alt"></i>
+                            </div>
+                        </div>
                         <div
                             class="widget p-4 rounded-lg bg-white border border-gray-100 dark:bg-gray-900 dark:border-gray-800">
                             <div class="flex flex-row items-center justify-between gap-x-4">
@@ -183,7 +197,7 @@
                                 <th class="py-3 px-6 text-left">Jugador</th>
                                 <th class="py-3 px-6 text-left hidden sm:hidden md:hidden lg:table-cell">Equipo</th>
                                 <th class="py-3 px-6 text-left hidden sm:hidden md:hidden lg:table-cell">Posición</th>
-                                <th class="py-3 px-6 text-left">Valoración J<b>{{$jornada}}</b></th>
+                                <th class="py-3 px-6 text-center">Valoración J<b>{{$jornada}}</b></th>
                                 <th class="py-3 px-6 text-center hidden sm:hidden md:hidden lg:table-cell">Valoración
                                     media
                                 </th>
@@ -257,7 +271,7 @@
                                     <td class="py-3 px-6 whitespace-nowrap hidden sm:hidden md:hidden lg:table-cell">
                                         <div class="flex items-center justify-center">
                                             <?php ($val_jornada += $jugador->val_media)?>
-                                            {{number_format($jugador->val_media, 1, ",", "")}}
+                                            {{number_format($jugador->val_media, 1, ",", "")}} pts.
                                         </div>
                                     </td>
                                     <td class="py-3 px-6 whitespace-nowrap">
