@@ -7,7 +7,7 @@
         </x-slot>
 
         <div class="mb-4 text-sm text-gray-600">
-            {{ __('This is a secure area of the application. Please confirm your password before continuing.') }}
+            {{ __('Esta es un área protegida de la aplicación. Por favor, confirma tu contraseña antes de continuar.') }}
         </div>
 
         <!-- Validation Errors -->
@@ -18,7 +18,7 @@
 
             <!-- Password -->
             <div>
-                <x-label for="password" :value="__('Password')" />
+                <x-label class="font-semibold text-base" for="password" :value="__('Contraseña')" />
 
                 <x-input id="password" class="block mt-1 w-full"
                                 type="password"
@@ -27,8 +27,8 @@
             </div>
 
             <div class="flex justify-end mt-4">
-                <x-button>
-                    {{ __('Confirm') }}
+                <x-button class="bg-green-700">
+                    {{ __('Confirmar') }}
                 </x-button>
             </div>
         </form>

@@ -339,7 +339,7 @@
                                 <td class="py-3 px-6 text-left whitespace-nowrap">
                                     <div class="flex items-center">
                                         @foreach($equipo->jugadores as $jug)
-                                            {{$jug->nombre}}<br/>
+                                            {{$jug->nombre}} @if($jug->pivot->capitan) || &copy; @endif<br/>
                                         @endforeach
                                     </div>
                                 </td>

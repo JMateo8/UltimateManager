@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Dashboard') }}
+            {{ __('Ultimate Manager') }}
         </h2>
     </x-slot>
     <div class="pt-6">
@@ -29,11 +29,12 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div
                 class="bg-white overflow-hidden shadow-sm sm:rounded-lg flex justify-between items-center overflow-x-auto">
-                <div class="p-6 bg-white border-b border-gray-200">
+                <div class="p-6 bg-white">
                     <?php $jornadas = \App\Models\Jornada::all()->pluck('id'); ?>
                     <form action="{{route("showJornada", [$equipo])}}" method="post" class="m-0">
                         @csrf
                         @method("POST")
+                        <div class="flex items-center gap-x-2">
                         <select class="border rounded-lg appearance-none focus:shadow-outline" name="jornada">
                             <h1>HOLA</h1>
                             @foreach($jornadas as $j)
@@ -42,6 +43,7 @@
                             @endforeach
                         </select>
                         <x-button type="submit" name="submit" class="bg-indigo-700">Refrescar</x-button>
+                        </div>
                     </form>
                 </div>
                 @if(!$jornadaObj->cerrada && $jornada == $jornada_actual)
@@ -215,33 +217,49 @@
                             @foreach($jugadores as $jugador)
                                 <tr class="border-b border-gray-200 hover:bg-gray-100">
                                     <td class="py-3 px-6 text-left whitespace-nowrap">
-                                        <div class="flex items-center gap-x-2">
-                                            <span class="font-medium">{{$jugador->nombre}}</span>
-                                            @if($jugador->pivot->capitan)
-                                                <span class="text-center pl-2 border-l-2 border-black">
-                                            <svg class="fill-current w-4 h-4 mr-2 text-black" viewBox="0 0 512 512"
-                                                 xmlns="http://www.w3.org/2000/svg">
-                                                <path style="fill:#4097CA;"
-                                                      d="M256,0l-90,256l90,256c141.16,0,256-114.841,256-256S397.16,0,256,0z"/>
-                                                <path style="fill:#4BB4F5;"
-                                                      d="M0,256c0,141.159,114.841,256,256,256V0C114.841,0,0,114.841,0,256z"/>
-                                                <path style="fill:#D2ECFD;"
-                                                      d="M256,45l-21.531,16.148L256,75c99.804,0,181,81.196,181,181s-81.196,181-181,181l-21.531,13.852 L256,467c116.346,0,211-94.654,211-211S372.346,45,256,45z"/>
-                                                <path style="fill:#FFFFFF;"
-                                                      d="M45,256c0,116.346,94.654,211,211,211v-30c-99.804,0-181-81.196-181-181S156.196,75,256,75V45 C139.654,45,45,139.654,45,256z"/>
-                                                <g>
-                                                    <path style="fill:#D2ECFD;"
-                                                          d="M303.853,218.255L350.884,181c-22.181-28.003-56.469-46-94.884-46l-20,30l20,30 C274.704,195,292.146,203.476,303.853,218.255z"/>
-                                                    <path style="fill:#D2ECFD;"
-                                                          d="M256,317l-20,30l20,30c38.415,0,72.703-17.997,94.884-46l-47.032-37.255 C292.146,308.524,274.704,317,256,317z"/>
-                                                </g>
-                                                <path style="fill:#FFFFFF;"
-                                                      d="M195,256c0-33.636,27.364-61,61-61v-60c-66.72,0-121,54.28-121,121s54.28,121,121,121v-60C222.364,317,195,289.636,195,256z"/>
-                                            </svg>
-                                            </span>
-                                            @endif
+                                        <div class="flex items-center text-sm">
+                                            <div class="relative w-8 h-8 mr-3 rounded-full md:block">
+{{--                                                <img class="object-cover w-full h-full rounded-full" src="{{asset('/storage/user/'.$user->file)}}" alt="" loading="lazy" />--}}
+                                                @if($jugador->imagen)
+                                                <img class="object-cover w-full h-full rounded-full" src="{{$jugador->imagen}}" alt="" loading="lazy" />
+                                                @else
+                                                <img class="object-cover w-full h-full rounded-full" src="https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png" alt="" loading="lazy" />
+                                                @endif
+                                                <div class="absolute inset-0 rounded-full shadow-inner" aria-hidden="true"></div>
+                                            </div>
+                                            <div>
+                                                <span class="font-medium">{{$jugador->nombre}}</span>
+                                            </div>
                                         </div>
                                     </td>
+{{--                                    <td class="py-3 px-6 text-left whitespace-nowrap">--}}
+{{--                                        <div class="flex items-center gap-x-2">--}}
+{{--                                            <span class="font-medium">{{$jugador->nombre}}</span>--}}
+{{--                                            @if($jugador->pivot->capitan)--}}
+{{--                                                <span class="text-center pl-2 border-l-2 border-black">--}}
+{{--                                            <svg class="fill-current w-4 h-4 mr-2 text-black" viewBox="0 0 512 512"--}}
+{{--                                                 xmlns="http://www.w3.org/2000/svg">--}}
+{{--                                                <path style="fill:#4097CA;"--}}
+{{--                                                      d="M256,0l-90,256l90,256c141.16,0,256-114.841,256-256S397.16,0,256,0z"/>--}}
+{{--                                                <path style="fill:#4BB4F5;"--}}
+{{--                                                      d="M0,256c0,141.159,114.841,256,256,256V0C114.841,0,0,114.841,0,256z"/>--}}
+{{--                                                <path style="fill:#D2ECFD;"--}}
+{{--                                                      d="M256,45l-21.531,16.148L256,75c99.804,0,181,81.196,181,181s-81.196,181-181,181l-21.531,13.852 L256,467c116.346,0,211-94.654,211-211S372.346,45,256,45z"/>--}}
+{{--                                                <path style="fill:#FFFFFF;"--}}
+{{--                                                      d="M45,256c0,116.346,94.654,211,211,211v-30c-99.804,0-181-81.196-181-181S156.196,75,256,75V45 C139.654,45,45,139.654,45,256z"/>--}}
+{{--                                                <g>--}}
+{{--                                                    <path style="fill:#D2ECFD;"--}}
+{{--                                                          d="M303.853,218.255L350.884,181c-22.181-28.003-56.469-46-94.884-46l-20,30l20,30 C274.704,195,292.146,203.476,303.853,218.255z"/>--}}
+{{--                                                    <path style="fill:#D2ECFD;"--}}
+{{--                                                          d="M256,317l-20,30l20,30c38.415,0,72.703-17.997,94.884-46l-47.032-37.255 C292.146,308.524,274.704,317,256,317z"/>--}}
+{{--                                                </g>--}}
+{{--                                                <path style="fill:#FFFFFF;"--}}
+{{--                                                      d="M195,256c0-33.636,27.364-61,61-61v-60c-66.72,0-121,54.28-121,121s54.28,121,121,121v-60C222.364,317,195,289.636,195,256z"/>--}}
+{{--                                            </svg>--}}
+{{--                                            </span>--}}
+{{--                                            @endif--}}
+{{--                                        </div>--}}
+{{--                                    </td>--}}
                                     <td class="py-3 px-6 text-left whitespace-nowrap hidden sm:hidden md:hidden lg:table-cell">
                                         <div class="flex items-center">
                                             {{--                                        <span class="font-medium">{{$jugador->equipo_euro->nombre}}</span>--}}
@@ -359,4 +377,5 @@
                 </div>
             </div>
         </div>
+    </div>
 </x-app-layout>

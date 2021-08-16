@@ -36,13 +36,13 @@
         <div class="pt-6">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                    <div class="p-6 bg-white border-b border-gray-200">
+                    <div class="p-6 bg-white border-b border-gray-200 overflow-x-auto">
                         <div x-data="{
                                openTab: 1,
                                activeClasses: 'border-l border-t border-r rounded-t text-indigo-700',
                                inactiveClasses: 'text-black-500 hover:text-green-600'
                             }" class="p-6">
-                            <ul class="flex border-b">
+                            <ul class="flex border-b overflow-x-auto overflow-y-hidden">
                                 <li @click="openTab = 1" :class="{ '-mb-px': openTab === 1 }" class="-mb-px mr-1">
                                     <a :class="openTab === 1 ? activeClasses : inactiveClasses" class="bg-white inline-block py-2 px-4 font-semibold" href="#">
                                         Todos

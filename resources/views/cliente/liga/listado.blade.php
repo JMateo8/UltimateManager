@@ -270,9 +270,6 @@
             </div>
         </div>
         <!-- Alpine.js -->
-
-
-
         <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
 
         <script>
@@ -281,9 +278,10 @@
                     responsive: true,
                     dom: 'Blfrtip',
                     autoWidth: false,
-                    buttons: [
-                        'copy', 'excel', 'pdf'
-                    ],
+                    buttons: [],
+                    // buttons: [
+                    //     'copy', 'excel', 'pdf'
+                    // ],
                     "order": [[ 0, "asc" ]],
                     "pagingType": "full_numbers",
                     pageLength: 10,

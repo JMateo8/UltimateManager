@@ -7,7 +7,7 @@
         </x-slot>
 
         <div class="mb-4 text-sm text-gray-600">
-            {{ __('Forgot your password? No problem. Just let us know your email address and we will email you a password reset link that will allow you to choose a new one.') }}
+            {{ __('¿Has olividado tu contraseña? No hay problema. Tan solo déjanos tu dirección de correo electrónico y te enviaremos un correo con un link que te permitirá cambiarla a una nueva.') }}
         </div>
 
         <!-- Session Status -->
@@ -21,14 +21,14 @@
 
             <!-- Email Address -->
             <div>
-                <x-label for="email" :value="__('Email')" />
+                <x-label class="font-semibold text-base" for="email" :value="__('Correo electrónico')" />
 
                 <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus />
             </div>
 
             <div class="flex items-center justify-end mt-4">
-                <x-button>
-                    {{ __('Email Password Reset Link') }}
+                <x-button class="bg-green-600">
+                    {{ __('Enviar correo') }}
                 </x-button>
             </div>
         </form>
