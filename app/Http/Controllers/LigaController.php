@@ -139,7 +139,7 @@ class LigaController extends Controller
             $liga->equipos()->attach($equipo);
             return redirect()->route("liga.show", [$liga])->with('status', "¡Equipo $equipo->nombre inscrito!");
         } else {
-            return redirect()->route("liga.index")->withErrors(["error" => "Error. Contraseña incorrecta"]);
+            return redirect()->route("liga.edit", [$liga])->withErrors(["error" => "Error. Contraseña incorrecta"]);
         }
     }
 
