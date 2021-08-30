@@ -53,7 +53,6 @@
                                         <select id="equipo" name="equipo" class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
                                             @foreach(\App\Models\EquipoEuro::all() as $equipo)
                                                 <option value="{{$equipo->id}}" @if(old('equipo') === $equipo->id) selected @endif>{{$equipo->nombre}}</option>
-{{--                                                <option value="{{$equipo->id}}" {{old('equipo') === $equipo->id ? "selected":""}}>{{$equipo->nombre}}</option>--}}
                                             @endforeach
                                         </select>
                                     </div>

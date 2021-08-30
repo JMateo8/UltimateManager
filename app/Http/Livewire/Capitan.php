@@ -14,7 +14,6 @@ class Capitan extends Component
         info($this->jugador);
         info($this->equipo);
         info($this->capitan);
-//        return back()->with('status', "Capitán: $this->jugador");
     }
 
     public function render()

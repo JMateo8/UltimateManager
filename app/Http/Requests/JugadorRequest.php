@@ -44,10 +44,6 @@ class JugadorRequest extends FormRequest
     {
         return [
             "val_media.required" => "Debe ingresar una valoración media valida"
-//            'val_media' => 'required|numeric|between:0, 100',
-//            'pais' => 'required|size:3',
-//            'edad' => 'required|numeric|between:15, 50',
-//            'altura' => 'required|digits:3',
         ];
     }
 }

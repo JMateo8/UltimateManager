@@ -29,13 +29,6 @@ class StoreUser extends FormRequest
         ];
     }
 
-    public function attributes()
-    {
-        return [
-//            "password" => "contraseña"
-        ];
-    }
-
     public function messages()
     {
         return [

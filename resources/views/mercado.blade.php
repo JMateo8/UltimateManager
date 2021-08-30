@@ -80,12 +80,10 @@
                                                 <td class="py-3 px-6 text-left whitespace-nowrap">
                                                     <div class="flex items-center text-sm">
                                                         <div class="relative w-8 h-8 mr-3 rounded-full md:block">
-                                                            {{--                                                <img class="object-cover w-full h-full rounded-full" src="{{asset('/storage/user/'.$user->file)}}" alt="" loading="lazy" />--}}
                                                             @if($jugador->imagen)
                                                                 <img class="object-cover w-full h-full rounded-full" src="{{$jugador->imagen}}" alt="" loading="lazy" />
                                                             @else
                                                                 <img class="object-cover w-full h-full rounded-full" src="https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png" alt="" loading="lazy" />
-{{--                                                                <img class="object-cover w-full h-full rounded-full" src="https://www.euroleague.net/_euroleague/themes/default/images/main-person-empty.jpg" alt="" loading="lazy" />--}}
                                                             @endif
                                                             <div class="absolute inset-0 rounded-full shadow-inner" aria-hidden="true"></div>
                                                         </div>
@@ -151,7 +149,6 @@
                                                     <td class="py-3 px-6 text-left whitespace-nowrap">
                                                         <div class="flex items-center text-sm">
                                                             <div class="relative w-8 h-8 mr-3 rounded-full md:block">
-                                                                {{--                                                <img class="object-cover w-full h-full rounded-full" src="{{asset('/storage/user/'.$user->file)}}" alt="" loading="lazy" />--}}
                                                                 @if($jugador->imagen)
                                                                     <img class="object-cover w-full h-full rounded-full" src="{{$jugador->imagen}}" alt="" loading="lazy" />
                                                                 @else
@@ -223,7 +220,6 @@
                                                     <td class="py-3 px-6 text-left whitespace-nowrap">
                                                         <div class="flex items-center text-sm">
                                                             <div class="relative w-8 h-8 mr-3 rounded-full md:block">
-                                                                {{--                                                <img class="object-cover w-full h-full rounded-full" src="{{asset('/storage/user/'.$user->file)}}" alt="" loading="lazy" />--}}
                                                                 @if($jugador->imagen)
                                                                     <img class="object-cover w-full h-full rounded-full" src="{{$jugador->imagen}}" alt="" loading="lazy" />
                                                                 @else
@@ -294,7 +290,6 @@
                                                     <td class="py-3 px-6 text-left whitespace-nowrap">
                                                         <div class="flex items-center text-sm">
                                                             <div class="relative w-8 h-8 mr-3 rounded-full md:block">
-                                                                {{--                                                <img class="object-cover w-full h-full rounded-full" src="{{asset('/storage/user/'.$user->file)}}" alt="" loading="lazy" />--}}
                                                                 @if($jugador->imagen)
                                                                     <img class="object-cover w-full h-full rounded-full" src="{{$jugador->imagen}}" alt="" loading="lazy" />
                                                                 @else
@@ -366,7 +361,6 @@
                                                     <td class="py-3 px-6 text-left whitespace-nowrap">
                                                         <div class="flex items-center text-sm">
                                                             <div class="relative w-8 h-8 mr-3 rounded-full md:block">
-                                                                {{--                                                <img class="object-cover w-full h-full rounded-full" src="{{asset('/storage/user/'.$user->file)}}" alt="" loading="lazy" />--}}
                                                                 @if($jugador->imagen)
                                                                     <img class="object-cover w-full h-full rounded-full" src="{{$jugador->imagen}}" alt="" loading="lazy" />
                                                                 @else
@@ -438,7 +432,6 @@
                                                     <td class="py-3 px-6 text-left whitespace-nowrap">
                                                         <div class="flex items-center text-sm">
                                                             <div class="relative w-8 h-8 mr-3 rounded-full md:block">
-                                                                {{--                                                <img class="object-cover w-full h-full rounded-full" src="{{asset('/storage/user/'.$user->file)}}" alt="" loading="lazy" />--}}
                                                                 @if($jugador->imagen)
                                                                     <img class="object-cover w-full h-full rounded-full" src="{{$jugador->imagen}}" alt="Foto {{$jugador->nombre}}" loading="lazy" />
                                                                 @else
@@ -504,7 +497,6 @@
                             <tr class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
                                 <th class="py-3 px-6 text-left">Jugador</th>
                                 <th class="py-3 px-6 text-left">Promedio</th>
-                                {{--                            @if($jornada<=10)--}}
                                 @for($t=1; $t<=\App\Models\Jornada::where("actual", 1)->first()->id; $t++)
                                     <th class="py-3 px-2 text-center whitespace-nowrap border-black border-l-2">
                                         <div class="flex flex-col">
@@ -512,25 +504,14 @@
                                         </div>
                                     </th>
                                 @endfor
-                                {{--                            @else--}}
-                                {{--                                @for($t=$jornada-8; $t<=$jornada; $t++)--}}
-                                {{--                                    <th class="py-3 px-2 text-center whitespace-nowrap border-black border-l-2">--}}
-                                {{--                                        <div class="flex flex-col">--}}
-                                {{--                                            <span class="font-medium">J{{$t}}</span>--}}
-                                {{--                                        </div>--}}
-                                {{--                                    </th>--}}
-                                {{--                                @endfor--}}
-                                {{--                            @endif--}}
                             </tr>
                             </thead>
                             <tbody class="text-gray-600 text-sm font-light">
-                            {{--                        @foreach(\App\Models\Jugador::with("jornadas")->get() as $jugador)--}}
                             @foreach(\App\Models\Jugador::with("jornadas")->orderByDesc("val_media")->paginate(5) as $jugador)
                                 <tr class="border-b border-gray-200 hover:bg-gray-100">
                                     <td class="py-3 px-6 text-left whitespace-nowrap">
                                         <div class="flex items-center text-sm">
                                             <div class="relative w-8 h-8 mr-3 rounded-full md:block">
-                                                {{--                                                <img class="object-cover w-full h-full rounded-full" src="{{asset('/storage/user/'.$user->file)}}" alt="" loading="lazy" />--}}
                                                 @if($jugador->imagen)
                                                     <img class="object-cover w-full h-full rounded-full" src="{{$jugador->imagen}}" alt="Foto {{$jugador->nombre}}" loading="lazy" />
                                                 @else
@@ -548,7 +529,6 @@
                                             <span class="font-medium">{{number_format($jugador->val_media, 1, ",", ".")}} pts.</span>
                                         </div>
                                     </td>
-                                    {{--                                @if($jugador->jornadas->count()<=10)--}}
                                     @foreach($jugador->jornadas as $jorn)
                                         <td class="py-3 px-2 text-center whitespace-nowrap border-black border-l-2">
                                             <div class="flex flex-col">
@@ -556,15 +536,6 @@
                                             </div>
                                         </td>
                                     @endforeach
-                                    {{--                                @else--}}
-                                    {{--                                    @foreach($jugador->jornadas->take(8) as $jorn)--}}
-                                    {{--                                        <td class="py-3 px-2 text-center whitespace-nowrap border-black border-l-2">--}}
-                                    {{--                                            <div class="flex flex-col">--}}
-                                    {{--                                                <span class="font-medium">{{$jorn->pivot->valoracion}}</span>--}}
-                                    {{--                                            </div>--}}
-                                    {{--                                        </td>--}}
-                                    {{--                                    @endforeach--}}
-                                    {{--                                @endif--}}
                                 </tr>
                             @endforeach
                             </tbody>

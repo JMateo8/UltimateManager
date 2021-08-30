@@ -31,9 +31,6 @@
                     <div class="grid overflow-hidden grid-cols-3 grid-rows-2 gap-2">
                         <!--Tablas-->
                         <div class="box col-span-3 sm:col-span-2 md:col-span-2 lg:col-span-2">
-                            <?php
-                                //$equipos = auth()->user()->equipos->take(4);
-                            ?>
                             <h3 class="text-center border-b-2 mb-3">Equipos</h3>
                             <table class="min-w-max w-full table-auto">
                                 <thead>
@@ -85,7 +82,6 @@
                                                 <div class="flex item-center justify-center">
                                                     <div class="w-4 mr-2 transform text-yellow-500 hover:text-yellow-500 hover:scale-110">
                                                         <a href="{{route("equipo.show", [$e] )}}" title="Ver">
-                                                            <!--<i class="far fa-eye"></i>-->
                                                             <i class="far fa-edit"></i>
                                                         </a>
                                                     </div>

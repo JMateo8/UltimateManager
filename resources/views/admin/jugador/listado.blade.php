@@ -94,7 +94,6 @@
                                                 <td class="py-3 px-6 text-left whitespace-nowrap">
                                                     <div class="flex items-center text-sm">
                                                         <div class="relative w-8 h-8 mr-3 rounded-full md:block">
-                                                            {{--                                                <img class="object-cover w-full h-full rounded-full" src="{{asset('/storage/user/'.$user->file)}}" alt="" loading="lazy" />--}}
                                                             @if($jugador->imagen)
                                                                 <img class="object-cover w-full h-full rounded-full" src="{{$jugador->imagen}}" alt="Foto {{$jugador->nombre}}" loading="lazy" />
                                                             @else
@@ -202,7 +201,6 @@
                                                     <td class="py-3 px-6 text-left whitespace-nowrap">
                                                         <div class="flex items-center text-sm">
                                                             <div class="relative w-8 h-8 mr-3 rounded-full md:block">
-                                                                {{--                                                <img class="object-cover w-full h-full rounded-full" src="{{asset('/storage/user/'.$user->file)}}" alt="" loading="lazy" />--}}
                                                                 @if($jugador->imagen)
                                                                     <img class="object-cover w-full h-full rounded-full" src="{{$jugador->imagen}}" alt="" loading="lazy" />
                                                                 @else
@@ -312,7 +310,6 @@
                                                     <td class="py-3 px-6 text-left whitespace-nowrap">
                                                         <div class="flex items-center text-sm">
                                                             <div class="relative w-8 h-8 mr-3 rounded-full md:block">
-                                                                {{--                                                <img class="object-cover w-full h-full rounded-full" src="{{asset('/storage/user/'.$user->file)}}" alt="" loading="lazy" />--}}
                                                                 @if($jugador->imagen)
                                                                     <img class="object-cover w-full h-full rounded-full" src="{{$jugador->imagen}}" alt="" loading="lazy" />
                                                                 @else
@@ -421,7 +418,6 @@
                                                     <td class="py-3 px-6 text-left whitespace-nowrap">
                                                         <div class="flex items-center text-sm">
                                                             <div class="relative w-8 h-8 mr-3 rounded-full md:block">
-                                                                {{--                                                <img class="object-cover w-full h-full rounded-full" src="{{asset('/storage/user/'.$user->file)}}" alt="" loading="lazy" />--}}
                                                                 @if($jugador->imagen)
                                                                     <img class="object-cover w-full h-full rounded-full" src="{{$jugador->imagen}}" alt="" loading="lazy" />
                                                                 @else
@@ -530,7 +526,6 @@
                                                     <td class="py-3 px-6 text-left whitespace-nowrap">
                                                         <div class="flex items-center text-sm">
                                                             <div class="relative w-8 h-8 mr-3 rounded-full md:block">
-                                                                {{--                                                <img class="object-cover w-full h-full rounded-full" src="{{asset('/storage/user/'.$user->file)}}" alt="" loading="lazy" />--}}
                                                                 @if($jugador->imagen)
                                                                     <img class="object-cover w-full h-full rounded-full" src="{{$jugador->imagen}}" alt="" loading="lazy" />
                                                                 @else
@@ -639,7 +634,6 @@
                                                     <td class="py-3 px-6 text-left whitespace-nowrap">
                                                         <div class="flex items-center text-sm">
                                                             <div class="relative w-8 h-8 mr-3 rounded-full md:block">
-                                                                {{--                                                <img class="object-cover w-full h-full rounded-full" src="{{asset('/storage/user/'.$user->file)}}" alt="" loading="lazy" />--}}
                                                                 @if($jugador->imagen)
                                                                     <img class="object-cover w-full h-full rounded-full" src="{{$jugador->imagen}}" alt="" loading="lazy" />
                                                                 @else

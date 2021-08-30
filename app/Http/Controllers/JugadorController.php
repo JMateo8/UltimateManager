@@ -15,28 +15,7 @@ class JugadorController extends Controller
      */
     public function index()
     {
-//        $jugadores = Jugador::all()->sortByDesc('val_media');
-//        $bases = \App\Models\Jugador::all()->where("posicion", "Base")->sortByDesc('val_media');
-//        $escoltas = \App\Models\Jugador::all()->where("posicion", "Escolta")->sortByDesc('val_media');
-//        $aleros = \App\Models\Jugador::all()->where("posicion", "Alero")->sortByDesc('val_media');
-//        $alapivots = \App\Models\Jugador::all()->where("posicion", "Ala-Pívot")->sortByDesc('val_media');
-//        $pivots = \App\Models\Jugador::all()->where("posicion", "Pívot")->sortByDesc('val_media');
-//
-//        return view("admin.jugador.listado", [
-//            "jugadores" => $jugadores,
-//            "bases" => $bases,
-//            "escoltas" => $escoltas,
-//            "aleros" => $aleros,
-//            "alapivots" => $alapivots,
-//            "pivots" => $pivots
-//        ]);
         $jugadores = \App\Models\Jugador::with("equipo_euro")->get();
-//        $bases = Jugador::with("jugadores")->where("posicion", "Base")->sortByDesc("val_media");
-//        $escoltas = Jugador::with("jugadores")->where("posicion", "Base")->sortByDesc("val_media");
-//        $aleros = Jugador::with("jugadores")->where("posicion", "Base")->sortByDesc("val_media");
-//        $alapivots = Jugador::with("jugadores")->where("posicion", "Base")->sortByDesc("val_media");
-//        $pivots = Jugador::with("jugadores")->where("posicion", "Base")->sortByDesc("val_media");
-        //info($jugadores);
         return view("admin.jugador.listado", ["jugadores" => $jugadores]);
     }
 
@@ -76,7 +55,7 @@ class JugadorController extends Controller
      */
     public function show(Jugador $jugador)
     {
-        //return view("admin.jugador.show", ["jugador" => $jugador]);
+        //
     }
 
     /**

@@ -279,9 +279,6 @@
                     dom: 'Blfrtip',
                     autoWidth: false,
                     buttons: [],
-                    // buttons: [
-                    //     'copy', 'excel', 'pdf'
-                    // ],
                     "order": [[ 0, "asc" ]],
                     "pagingType": "full_numbers",
                     pageLength: 10,

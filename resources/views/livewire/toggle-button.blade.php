@@ -2,7 +2,6 @@
     <input wire:model="capitan" type="checkbox" name="toggle" id="toggle" class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-gray-400 text-green-600 border-4 border-black appearance-none cursor-pointer"/>
     <label for="toggle" class="toggle-label block overflow-hidden h-6 rounded-full bg-gray-300 cursor-pointer"></label>
     <span class="text-xs uppercase font-thin">Capitán</span>
-{{--    {{$equipo}} || {{$jugador}} || {{$capitan}} || {{$jornada}}--}}
 </div>
 <style>
     /* CHECKBOX TOGGLE SWITCH */

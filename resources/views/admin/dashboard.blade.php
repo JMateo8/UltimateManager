@@ -5,7 +5,6 @@
     $equipos = \App\Models\Equipo::with(["user", "jornadas"])->with("jugadores", function($q) use($jornada) {
         $q->where("jornada_id", $jornada);
     })->get();
-//    info(\App\Models\JornadaJugador::all());
 ?>
 <x-app-layout>
     <x-slot name="header">
@@ -13,78 +12,6 @@
             {{ __('Panel de administración') }}
         </h2>
     </x-slot>
-
-{{--    <div class="pt-6">--}}
-{{--        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">--}}
-{{--            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">--}}
-{{--                <div class="p-6 bg-white border-b border-gray-200">--}}
-{{--                    <table class="min-w-max w-full table-auto">--}}
-{{--                        <thead>--}}
-{{--                        <tr class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">--}}
-{{--                            <th class="py-3 px-6 text-left">Liga</th>--}}
-{{--                            <th class="py-3 px-6 text-left">Equipos</th>--}}
-{{--                            <th class="py-3 px-6 text-left">Total</th>--}}
-{{--                            <th class="py-3 px-6 text-left">Puntuaciones Jornada</th>--}}
-{{--                        </tr>--}}
-{{--                        </thead>--}}
-{{--                        <tbody class="text-gray-600 text-sm font-light">--}}
-{{--                        @foreach(\App\Models\Liga::with("equipos")->get() as $liga)--}}
-{{--                        @foreach(\App\Models\Liga::with("equipos")->get() as $liga)--}}
-{{--                            <tr class="border-b border-gray-200 hover:bg-gray-100">--}}
-{{--                                <td class="py-3 px-6 text-left whitespace-nowrap">--}}
-{{--                                    <div class="flex items-center">--}}
-{{--                                        <span class="font-medium">{{ucwords($liga->nombre)}}</span>--}}
-{{--                                    </div>--}}
-{{--                                </td>--}}
-{{--                                <td class="py-3 px-6 text-left whitespace-nowrap">--}}
-{{--                                    <div class="flex flex-col">--}}
-{{--                                        @foreach($liga->equipos as $equipo)--}}
-{{--                                            {{ucwords($equipo->nombre)}}<br/>--}}
-{{--                                        @endforeach--}}
-{{--                                    </div>--}}
-{{--                                </td>--}}
-{{--                                <td class="py-3 px-6 text-left whitespace-nowrap">--}}
-{{--                                    <div class="flex flex-col">--}}
-{{--                                        @foreach($liga->equipos as $equipo)--}}
-{{--                                            {{ucwords($equipo->puntuacion)}} pts.<br/>--}}
-{{--                                        @endforeach--}}
-{{--                                    </div>--}}
-{{--                                </td>--}}
-{{--                                <td class="py-3 px-6 text-left whitespace-nowrap">--}}
-{{--                                    <div class="flex flex-col">--}}
-{{--                                        @foreach($liga->equipos as $equipo)--}}
-{{--                                            <span class="font-medium">{{info($equipo->with("jornadas")->get())}}</span>--}}
-{{--                                            @if($jornada<=10)--}}
-{{--                                                @for($i=$jornada; $i>0; $i--)--}}
-{{--                                                    @foreach($equipo->jornadas->where("pivot.jornada_id", $i) as $ej)--}}
-{{--                                                        J{{$i}}: {{$ej->pivot->puntuacion}} pts.--}}
-{{--                                                    @endforeach--}}
-{{--                                                @endfor--}}
-{{--                                            @else--}}
-{{--                                                @for($i=$jornada; $i>$jornada-10; $i--)--}}
-{{--                                                    @foreach($equipo->jornadas->where("pivot.jornada_id", $i) as $ej)--}}
-{{--                                                        J{{$i}}: {{$ej->pivot->puntuacion}} pts.--}}
-{{--                                                    @endforeach--}}
-{{--                                                @endfor--}}
-{{--                                            @endif--}}
-{{--                                        <br/>--}}
-{{--                                        @foreach($equipo->with("jornadas")->get() as $eq)--}}
-{{--                                        @foreach($eq->jornadas->where("id", 1) as $ej)--}}
-{{--                                            <span class="font-medium">{{$ej->pivot->puntuacion}}</span>--}}
-{{--                                            {{info($eq)}}--}}
-{{--                                        @endforeach--}}
-{{--                                        @endforeach--}}
-{{--                                        @endforeach--}}
-{{--                                    </div>--}}
-{{--                                </td>--}}
-{{--                            </tr>--}}
-{{--                        @endforeach--}}
-{{--                        </tbody>--}}
-{{--                    </table>--}}
-{{--                </div>--}}
-{{--            </div>--}}
-{{--        </div>--}}
-{{--    </div>--}}
 
     <div class="pt-6">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
@@ -126,7 +53,6 @@
                 <div class="p-6 bg-white border-b border-gray-200 flex justify-between items-center">
                     <div class="w-1/4">
                         Resultados de la jornada <b>{{$jornada}}</b>
-{{--                        || @if($cerrada) Disponible (jornada cerrada) @else No disponible (hasta cierre de jornada) @endif--}}
                     </div>
                     <div class="w-3/4" flex justify-between gap-x-2">
                         <div>
@@ -139,9 +65,6 @@
                                         <div class="absolute">
                                             <div class="flex flex-row items-center justify-center gap-x-2">
                                                 <i class="fas fa-upload text-green-700 hover:text-white"></i>
-{{--                                                <i class="fa fa-folder-open text-green-700"></i>--}}
-{{--                                                <i class="fas fa-cloud-upload-alt text-green-700"></i>--}}
-{{--                                                <i class="fas fa-file-upload text-green-700"></i>--}}
                                                 <span class="block text-green-400 font-semibold hover:text-white">Selecciona el archivo</span>
                                             </div>
                                         </div>
@@ -220,9 +143,6 @@
                                     </svg>
                                     <span>Ligas</span>
                                 </x-button>
-{{--                                <button class="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded">--}}
-{{--                                    Administrar ligas--}}
-{{--                                </button>--}}
                             </a>
                         </div>
                     </div>
@@ -240,7 +160,6 @@
                         <tr class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
                             <th class="py-3 px-6 text-left">Jugador</th>
                             <th class="py-3 px-6 text-left">Promedio</th>
-{{--                            @if($jornada<=10)--}}
                                 @for($t=1; $t<=$jornada; $t++)
                                     <th class="py-3 px-2 text-center whitespace-nowrap border-black border-l-2">
                                         <div class="flex flex-col">
@@ -248,19 +167,9 @@
                                         </div>
                                     </th>
                                 @endfor
-{{--                            @else--}}
-{{--                                @for($t=$jornada-8; $t<=$jornada; $t++)--}}
-{{--                                    <th class="py-3 px-2 text-center whitespace-nowrap border-black border-l-2">--}}
-{{--                                        <div class="flex flex-col">--}}
-{{--                                            <span class="font-medium">J{{$t}}</span>--}}
-{{--                                        </div>--}}
-{{--                                    </th>--}}
-{{--                                @endfor--}}
-{{--                            @endif--}}
                         </tr>
                         </thead>
                         <tbody class="text-gray-600 text-sm font-light">
-                        {{--                        @foreach(\App\Models\Jugador::with("jornadas")->get() as $jugador)--}}
                         @foreach(\App\Models\Jugador::with("jornadas")->orderByDesc("val_media")->paginate(5) as $jugador)
                             <tr class="border-b border-gray-200 hover:bg-gray-100">
                                 <td class="py-3 px-6 text-left whitespace-nowrap">
@@ -273,7 +182,6 @@
                                         <span class="font-medium">{{number_format($jugador->val_media, 1, ",", ".")}} pts.</span>
                                     </div>
                                 </td>
-{{--                                @if($jugador->jornadas->count()<=10)--}}
                                     @foreach($jugador->jornadas as $jorn)
                                         <td class="py-3 px-2 text-center whitespace-nowrap border-black border-l-2">
                                             <div class="flex flex-col">
@@ -281,15 +189,6 @@
                                             </div>
                                         </td>
                                     @endforeach
-{{--                                @else--}}
-{{--                                    @foreach($jugador->jornadas->take(8) as $jorn)--}}
-{{--                                        <td class="py-3 px-2 text-center whitespace-nowrap border-black border-l-2">--}}
-{{--                                            <div class="flex flex-col">--}}
-{{--                                                <span class="font-medium">{{$jorn->pivot->valoracion}}</span>--}}
-{{--                                            </div>--}}
-{{--                                        </td>--}}
-{{--                                    @endforeach--}}
-{{--                                @endif--}}
                             </tr>
                         @endforeach
                         </tbody>
@@ -316,8 +215,6 @@
                         </tr>
                         </thead>
                         <tbody class="text-gray-600 text-sm font-light">
-                        {{--                        @foreach(\App\Models\Liga::with("equipos")->get() as $liga)--}}
-                        {{--                        @foreach(\App\Models\Equipo::with(["user", "jornadas"])->get() as $equipo)--}}
                         @foreach($equipos as $equipo)
                             {{info($equipo->toArray())}}
                             <tr class="border-b border-gray-200 hover:bg-gray-100">
@@ -357,168 +254,5 @@
             </div>
         </div>
     </div>
-{{--    <div class="pt-6">--}}
-{{--        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">--}}
-{{--            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">--}}
-{{--                <div class="p-6 bg-white border-b border-gray-200">--}}
-{{--                    <table class="min-w-max w-full table-auto">--}}
-{{--                        <thead>--}}
-{{--                        <tr class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">--}}
-{{--                            <th class="py-3 px-6 text-left">Nombre</th>--}}
-{{--                            <th class="py-3 px-6 text-left">Nombre</th>--}}
-{{--                            <th class="py-3 px-6 text-left">Puntuación</th>--}}
-{{--                            <th class="py-3 px-6 text-left">Jugadores</th>--}}
-{{--                            <th class="py-3 px-6 text-left">ID JORNADA</th>--}}
-{{--                            <th class="py-3 px-6 text-left">ID EQUIPO</th>--}}
-{{--                            <th class="py-3 px-6 text-left">ID JUGADOR</th>--}}
-{{--                            <th class="py-3 px-6 text-left">Valoracion</th>--}}
-{{--                        </tr>--}}
-{{--                        </thead>--}}
-{{--                        <tbody class="text-gray-600 text-sm font-light">--}}
-{{--                        @foreach($equipos as $equipo)--}}
-{{--                            <tr class="border-b border-gray-200 hover:bg-gray-100">--}}
-{{--                                <td class="py-3 px-6 text-left whitespace-nowrap">--}}
-{{--                                    <div class="flex items-center">--}}
-{{--                                        <span class="font-medium">{{$equipo->nombre}}</span>--}}
-{{--                                    </div>--}}
-{{--                                </td>--}}
-{{--                                <td class="py-3 px-6 text-left whitespace-nowrap">--}}
-{{--                                    <div class="flex items-center">--}}
-{{--                                        <span class="font-medium">{{$equipo->user->name}}</span>--}}
-{{--                                    </div>--}}
-{{--                                </td>--}}
-{{--                                <td class="py-3 px-6 text-left whitespace-nowrap">--}}
-{{--                                    <div class="flex items-center">--}}
-{{--                                        <span class="font-medium">{{$equipo->puntuacion}} pts.</span>--}}
-{{--                                    </div>--}}
-{{--                                </td>--}}
-{{--                                <td class="py-3 px-6 text-left whitespace-nowrap">--}}
-{{--                                    <div class="flex flex-col">--}}
-{{--                                        @foreach($equipo->jugadores as $jugador)--}}
-{{--                                        {{info($jugador)}}--}}
-{{--                                            <span class="font-medium">{{$jugador->nombre}}</span>--}}
-{{--                                        @endforeach--}}
-{{--                                    </div>--}}
-{{--                                </td>--}}
-{{--                                <td class="py-3 px-6 text-left whitespace-nowrap">--}}
-{{--                                    <div class="flex flex-col">--}}
-{{--                                        @foreach($equipo->jugadores as $jugador)--}}
-{{--                                            <span class="font-medium">{{$jugador->pivot->jornada_id}}</span>--}}
-{{--                                        @endforeach--}}
-{{--                                    </div>--}}
-{{--                                </td>--}}
-{{--                                <td class="py-3 px-6 text-left whitespace-nowrap">--}}
-{{--                                    <div class="flex flex-col">--}}
-{{--                                        @foreach($equipo->jugadores as $jugador)--}}
-{{--                                            <span class="font-medium">{{$jugador->pivot->equipo_id}}</span>--}}
-{{--                                        @endforeach--}}
-{{--                                    </div>--}}
-{{--                                </td>--}}
-{{--                                <td class="py-3 px-6 text-left whitespace-nowrap">--}}
-{{--                                    <div class="flex flex-col">--}}
-{{--                                        @foreach($equipo->jugadores as $jugador)--}}
-{{--                                            <span class="font-medium">{{$jugador->pivot->jugador_id}}</span>--}}
-{{--                                        @endforeach--}}
-{{--                                    </div>--}}
-{{--                                </td>--}}
-{{--                                <td class="py-3 px-6 text-left whitespace-nowrap">--}}
-{{--                                    <div class="flex flex-col">--}}
-{{--                                        @foreach($equipo->jugadores as $jugador)--}}
-{{--                                            <span class="font-medium">{{$jugador->pivot->jugador_id}}</span>--}}
-{{--                                        @endforeach--}}
-{{--                                    </div>--}}
-{{--                                </td>--}}
-{{--                            </tr>--}}
-{{--                        @endforeach--}}
-{{--                        </tbody>--}}
-{{--                    </table>--}}
-{{--                </div>--}}
-{{--            </div>--}}
-{{--        </div>--}}
-{{--    </div>--}}
-
-{{--    <div class="pt-6">--}}
-{{--        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">--}}
-{{--            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">--}}
-{{--                <div class="p-6 bg-white border-b border-gray-200">--}}
-{{--                    <table class="min-w-max w-full table-auto">--}}
-{{--                        <thead>--}}
-{{--                        <tr class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">--}}
-{{--                            <th class="py-3 px-6 text-left">ID</th>--}}
-{{--                            <th class="py-3 px-6 text-left">Nombre</th>--}}
-{{--                            <th class="py-3 px-6 text-left">Jugadores</th>--}}
-{{--                        </tr>--}}
-{{--                        </thead>--}}
-{{--                        <tbody class="text-gray-600 text-sm font-light">--}}
-{{--                        @foreach(\App\Models\EquipoEuro::with("jugadores")->get() as $equipo)--}}
-{{--                            <tr class="border-b border-gray-200 hover:bg-gray-100">--}}
-{{--                                <td class="py-3 px-6 text-left whitespace-nowrap">--}}
-{{--                                    <div class="flex items-center">--}}
-{{--                                        <span class="font-medium">{{$equipo->id}}</span>--}}
-{{--                                    </div>--}}
-{{--                                </td>--}}
-{{--                                <td class="py-3 px-6 text-left whitespace-nowrap">--}}
-{{--                                    <div class="flex items-center">--}}
-{{--                                        <span class="font-medium">{{$equipo->nombre}}</span>--}}
-{{--                                    </div>--}}
-{{--                                </td>--}}
-{{--                                <td class="py-3 px-6 text-left whitespace-nowrap">--}}
-{{--                                    <div class="flex flex-col">--}}
-{{--                                        @foreach($equipo->jugadores as $jugador)--}}
-{{--                                            <span class="font-medium">{{$jugador->nombre}}</span>--}}
-{{--                                        @endforeach--}}
-{{--                                    </div>--}}
-{{--                                </td>--}}
-{{--                            </tr>--}}
-{{--                        @endforeach--}}
-{{--                        </tbody>--}}
-{{--                    </table>--}}
-{{--                </div>--}}
-{{--            </div>--}}
-{{--        </div>--}}
-{{--    </div>--}}
-
-{{--    <div class="pt-6">--}}
-{{--        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">--}}
-{{--            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">--}}
-{{--                <div class="p-6 bg-white border-b border-gray-200">--}}
-{{--                    <table class="min-w-max w-full table-auto">--}}
-{{--                        <thead>--}}
-{{--                        <tr class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">--}}
-{{--                            <th class="py-3 px-6 text-left">User</th>--}}
-{{--                            <th class="py-3 px-6 text-left">Equipos</th>--}}
-{{--                            <th class="py-3 px-6 text-left">Ligas</th>--}}
-{{--                        </tr>--}}
-{{--                        </thead>--}}
-{{--                        <tbody class="text-gray-600 text-sm font-light">--}}
-{{--                        @foreach(\App\Models\User::with(["equipos", "ligas"])->get() as $user)--}}
-{{--                            <tr class="border-b border-gray-200 hover:bg-gray-100">--}}
-{{--                                <td class="py-3 px-6 text-left whitespace-nowrap">--}}
-{{--                                    <div class="flex items-center">--}}
-{{--                                        <span class="font-medium">{{$user->name}}</span>--}}
-{{--                                    </div>--}}
-{{--                                </td>--}}
-{{--                                <td class="py-3 px-6 text-left whitespace-nowrap">--}}
-{{--                                    <div class="flex flex-col">--}}
-{{--                                        @foreach($user->equipos as $equipo)--}}
-{{--                                        <span class="font-medium">{{$equipo->nombre}}</span>--}}
-{{--                                        @endforeach--}}
-{{--                                    </div>--}}
-{{--                                </td>--}}
-{{--                                <td class="py-3 px-6 text-left whitespace-nowrap">--}}
-{{--                                    <div class="flex flex-col">--}}
-{{--                                        @foreach($user->ligas as $liga)--}}
-{{--                                            <span class="font-medium">{{$liga->nombre}}</span>--}}
-{{--                                        @endforeach--}}
-{{--                                    </div>--}}
-{{--                                </td>--}}
-{{--                            </tr>--}}
-{{--                        @endforeach--}}
-{{--                        </tbody>--}}
-{{--                    </table>--}}
-{{--                </div>--}}
-{{--            </div>--}}
-{{--        </div>--}}
-{{--    </div>--}}
 
 </x-app-layout>

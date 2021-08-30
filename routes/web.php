@@ -25,11 +25,6 @@ Route::get('/dashboard', function () {
     }
 })->middleware(['auth'])->name('dashboard');
 
-//Route::group(["prefix" => "user", "middleware" => ["auth"]], function (){
-//    Route::post('/filtrarUser', [\App\Http\Controllers\UserController::class, 'filtrarUser'])
-//        ->name("filtrarUser");
-//});
-
 Route::resource("user", \App\Http\Controllers\UserController::class)
     ->middleware(["auth", "admin", "password.confirm"]);
 

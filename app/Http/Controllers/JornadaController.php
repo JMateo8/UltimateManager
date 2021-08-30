@@ -54,19 +54,9 @@ class JornadaController extends Controller
         * y volvemos a la página anterior */
         foreach (Equipo::all() as $equipo) {
             $equipo->jornadas()->attach($newJornadaId);
-//            DB::table("equipo_jornada")->insert([
-//                "equipo_id" => $equipo->id,
-//                "jornada_id" => $newJornadaId
-//            ]);
-
             foreach ($equipo->jugadores->where("pivot.jornada_id", $jornadaId) as $jugador) {
                 $equipo = Equipo::find($jugador->pivot->equipo_id);
                 $equipo->jugadores()->attach($jugador->pivot->jugador_id, ["jornada_id" => $newJornadaId]);
-//                DB::table("equipo_jornada_jugador")->insert([
-//                    "equipo_id" => $jugador->pivot->equipo_id,
-//                    "jugador_id" => $jugador->pivot->jugador_id,
-//                    "jornada_id" => $newJornadaId
-//                ]);
             }
         }
 

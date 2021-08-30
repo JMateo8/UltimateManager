@@ -23,7 +23,6 @@ class ToggleButton extends Component
             ->where("jugador_id", $this->jugador)
             ->where("jornada_id", $this->jornada)
             ->first()->capitan;
-//        $this->capitan = (bool) $this->model->getAttribute($this->field);
     }
 
     public function render()
@@ -33,26 +32,11 @@ class ToggleButton extends Component
 
     public function updating($field, $value)
     {
-//        $jornada = Jornada::where("actual", 1)->first()->id;
         $eq = \App\Models\Equipo::find($this->equipo);
         $eq->jugadores()->where("jornada_id", $this->jornada)->where("capitan", 1)->update(["capitan" => 0]);
         if (!$this->capitan){
             $eq->jugadores()->where("jornada_id", $this->jornada)->where("jugador_id", $this->jugador)->update(["capitan" => 1]);
         }
-//        DB::table("equipo_jornada_jugador")
-//            ->where("equipo_id", $this->equipo)
-//            ->where("jornada_id", $this->jornada)
-//            ->where("capitan", 1)
-//            ->update(["capitan" => 0]);
-//
-//        DB::table("equipo_jornada_jugador")
-//            ->where("equipo_id", $this->equipo)
-//            ->where("jornada_id", $this->jornada)
-//            ->where("jugador_id", $this->jugador)
-//            ->update(["capitan" => 1]);
-//        \App\Models\Equipo::with("users")->where("pivot.capitan", 1)->update(["capitan" => 0]);
-//        User::where('admin', 1)->update(['admin' => 0]);
-//        $this->model->setAttribute($this->field, $value)->save();
         return redirect()->route('equipo.show', [$eq]);
     }
 }
