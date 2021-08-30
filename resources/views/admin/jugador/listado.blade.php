@@ -96,9 +96,9 @@
                                                         <div class="relative w-8 h-8 mr-3 rounded-full md:block">
                                                             {{--                                                <img class="object-cover w-full h-full rounded-full" src="{{asset('/storage/user/'.$user->file)}}" alt="" loading="lazy" />--}}
                                                             @if($jugador->imagen)
-                                                                <img class="object-cover w-full h-full rounded-full" src="{{$jugador->imagen}}" alt="" loading="lazy" />
+                                                                <img class="object-cover w-full h-full rounded-full" src="{{$jugador->imagen}}" alt="Foto {{$jugador->nombre}}" loading="lazy" />
                                                             @else
-                                                                <img class="object-cover w-full h-full rounded-full" src="https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png" alt="" loading="lazy" />
+                                                                <img class="object-cover w-full h-full rounded-full" src="https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png" alt="Jugador sin foto" loading="lazy" />
                                                             @endif
                                                             <div class="absolute inset-0 rounded-full shadow-inner" aria-hidden="true"></div>
                                                         </div>

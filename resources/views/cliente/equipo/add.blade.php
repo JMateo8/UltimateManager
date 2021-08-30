@@ -94,8 +94,19 @@
                                         @foreach($jugadores as $jugador)
                                             <tr class="border-b border-gray-200 hover:bg-gray-100">
                                                 <td class="py-3 px-6 text-left whitespace-nowrap">
-                                                    <div class="flex items-center">
-                                                        <span class="font-medium">{{$jugador->nombre}}</span>
+                                                    <div class="flex items-center text-sm">
+                                                        <div class="relative w-8 h-8 mr-3 rounded-full md:block">
+                                                            {{--                                                <img class="object-cover w-full h-full rounded-full" src="{{asset('/storage/user/'.$user->file)}}" alt="" loading="lazy" />--}}
+                                                            @if($jugador->imagen)
+                                                                <img class="object-cover w-full h-full rounded-full" src="{{$jugador->imagen}}" alt="" loading="lazy" />
+                                                            @else
+                                                                <img class="object-cover w-full h-full rounded-full" src="https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png" alt="" loading="lazy" />
+                                                            @endif
+                                                            <div class="absolute inset-0 rounded-full shadow-inner" aria-hidden="true"></div>
+                                                        </div>
+                                                        <div>
+                                                            <span class="font-medium">{{$jugador->nombre}}</span>
+                                                        </div>
                                                     </div>
                                                 </td>
                                                 <td class="py-3 px-6 text-center whitespace-nowrap">
@@ -175,8 +186,19 @@
                                             @if($jugador->posicion === "Base")
                                                 <tr class="border-b border-gray-200 hover:bg-gray-100">
                                                     <td class="py-3 px-6 text-left whitespace-nowrap">
-                                                        <div class="flex items-center">
-                                                            <span class="font-medium">{{$jugador->nombre}}</span>
+                                                        <div class="flex items-center text-sm">
+                                                            <div class="relative w-8 h-8 mr-3 rounded-full md:block">
+                                                                {{--                                                <img class="object-cover w-full h-full rounded-full" src="{{asset('/storage/user/'.$user->file)}}" alt="" loading="lazy" />--}}
+                                                                @if($jugador->imagen)
+                                                                    <img class="object-cover w-full h-full rounded-full" src="{{$jugador->imagen}}" alt="" loading="lazy" />
+                                                                @else
+                                                                    <img class="object-cover w-full h-full rounded-full" src="https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png" alt="" loading="lazy" />
+                                                                @endif
+                                                                <div class="absolute inset-0 rounded-full shadow-inner" aria-hidden="true"></div>
+                                                            </div>
+                                                            <div>
+                                                                <span class="font-medium">{{$jugador->nombre}}</span>
+                                                            </div>
                                                         </div>
                                                     </td>
                                                     <td class="py-3 px-6 text-center whitespace-nowrap hidden sm:hidden md:table-cell lg:table-cell">
@@ -259,8 +281,19 @@
                                             @if($jugador->posicion === "Escolta")
                                                 <tr class="border-b border-gray-200 hover:bg-gray-100">
                                                     <td class="py-3 px-6 text-left whitespace-nowrap">
-                                                        <div class="flex items-center">
-                                                            <span class="font-medium">{{$jugador->nombre}}</span>
+                                                        <div class="flex items-center text-sm">
+                                                            <div class="relative w-8 h-8 mr-3 rounded-full md:block">
+                                                                {{--                                                <img class="object-cover w-full h-full rounded-full" src="{{asset('/storage/user/'.$user->file)}}" alt="" loading="lazy" />--}}
+                                                                @if($jugador->imagen)
+                                                                    <img class="object-cover w-full h-full rounded-full" src="{{$jugador->imagen}}" alt="" loading="lazy" />
+                                                                @else
+                                                                    <img class="object-cover w-full h-full rounded-full" src="https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png" alt="" loading="lazy" />
+                                                                @endif
+                                                                <div class="absolute inset-0 rounded-full shadow-inner" aria-hidden="true"></div>
+                                                            </div>
+                                                            <div>
+                                                                <span class="font-medium">{{$jugador->nombre}}</span>
+                                                            </div>
                                                         </div>
                                                     </td>
                                                     <td class="py-3 px-6 text-center whitespace-nowrap hidden sm:hidden md:table-cell lg:table-cell">
@@ -341,8 +374,19 @@
                                             @if($jugador->posicion === "Alero")
                                                 <tr class="border-b border-gray-200 hover:bg-gray-100">
                                                     <td class="py-3 px-6 text-left whitespace-nowrap">
-                                                        <div class="flex items-center">
-                                                            <span class="font-medium">{{$jugador->nombre}}</span>
+                                                        <div class="flex items-center text-sm">
+                                                            <div class="relative w-8 h-8 mr-3 rounded-full md:block">
+                                                                {{--                                                <img class="object-cover w-full h-full rounded-full" src="{{asset('/storage/user/'.$user->file)}}" alt="" loading="lazy" />--}}
+                                                                @if($jugador->imagen)
+                                                                    <img class="object-cover w-full h-full rounded-full" src="{{$jugador->imagen}}" alt="" loading="lazy" />
+                                                                @else
+                                                                    <img class="object-cover w-full h-full rounded-full" src="https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png" alt="" loading="lazy" />
+                                                                @endif
+                                                                <div class="absolute inset-0 rounded-full shadow-inner" aria-hidden="true"></div>
+                                                            </div>
+                                                            <div>
+                                                                <span class="font-medium">{{$jugador->nombre}}</span>
+                                                            </div>
                                                         </div>
                                                     </td>
                                                     <td class="py-3 px-6 text-center whitespace-nowrap hidden sm:hidden md:table-cell lg:table-cell">
@@ -424,8 +468,19 @@
                                             @if($jugador->posicion === "Ala-Pivot")
                                                 <tr class="border-b border-gray-200 hover:bg-gray-100">
                                                     <td class="py-3 px-6 text-left whitespace-nowrap">
-                                                        <div class="flex items-center">
-                                                            <span class="font-medium">{{$jugador->nombre}}</span>
+                                                        <div class="flex items-center text-sm">
+                                                            <div class="relative w-8 h-8 mr-3 rounded-full md:block">
+                                                                {{--                                                <img class="object-cover w-full h-full rounded-full" src="{{asset('/storage/user/'.$user->file)}}" alt="" loading="lazy" />--}}
+                                                                @if($jugador->imagen)
+                                                                    <img class="object-cover w-full h-full rounded-full" src="{{$jugador->imagen}}" alt="" loading="lazy" />
+                                                                @else
+                                                                    <img class="object-cover w-full h-full rounded-full" src="https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png" alt="" loading="lazy" />
+                                                                @endif
+                                                                <div class="absolute inset-0 rounded-full shadow-inner" aria-hidden="true"></div>
+                                                            </div>
+                                                            <div>
+                                                                <span class="font-medium">{{$jugador->nombre}}</span>
+                                                            </div>
                                                         </div>
                                                     </td>
                                                     <td class="py-3 px-6 text-center whitespace-nowrap hidden sm:hidden md:table-cell lg:table-cell">
@@ -507,8 +562,19 @@
                                             @if($jugador->posicion === "Pivot")
                                                 <tr class="border-b border-gray-200 hover:bg-gray-100">
                                                     <td class="py-3 px-6 text-left whitespace-nowrap">
-                                                        <div class="flex items-center">
-                                                            <span class="font-medium">{{$jugador->nombre}}</span>
+                                                        <div class="flex items-center text-sm">
+                                                            <div class="relative w-8 h-8 mr-3 rounded-full md:block">
+                                                                {{--                                                <img class="object-cover w-full h-full rounded-full" src="{{asset('/storage/user/'.$user->file)}}" alt="" loading="lazy" />--}}
+                                                                @if($jugador->imagen)
+                                                                    <img class="object-cover w-full h-full rounded-full" src="{{$jugador->imagen}}" alt="" loading="lazy" />
+                                                                @else
+                                                                    <img class="object-cover w-full h-full rounded-full" src="https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png" alt="" loading="lazy" />
+                                                                @endif
+                                                                <div class="absolute inset-0 rounded-full shadow-inner" aria-hidden="true"></div>
+                                                            </div>
+                                                            <div>
+                                                                <span class="font-medium">{{$jugador->nombre}}</span>
+                                                            </div>
                                                         </div>
                                                     </td>
                                                     <td class="py-3 px-6 text-center whitespace-nowrap hidden sm:hidden md:table-cell lg:table-cell">
